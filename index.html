@@ -382,7 +382,26 @@
     align-items: flex-start;
     flex-wrap: wrap;
     gap: 12px;
+    position: relative;
+    transition: border-color 0.2s;
   }
+
+  .edu-card:hover { border-color: var(--orange); }
+
+  .edu-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--orange);
+    border-radius: 6px 0 0 6px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .edu-card:hover::before { opacity: 1; }
 
   .edu-degree { font-weight: 700; font-size: 14px; color: var(--text); }
   .edu-school { color: var(--orange); font-size: 12px; margin-top: 4px; }
@@ -390,8 +409,23 @@
     text-align: right;
     font-size: 12px;
     color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
   }
-  .edu-cgpa { color: var(--green); font-weight: 700; font-size: 16px; margin-top: 4px; }
+  .edu-period {
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(249,115,22,0.1);
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(249,115,22,0.4);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .edu-cgpa { color: var(--green); font-weight: 700; font-size: 16px; }
 
   /* CONTACT */
   .contact-wrapper {
@@ -526,7 +560,49 @@
     .topbar-title { text-align: left; }
   }
 
-  /* FADE IN */
+  /* PRINT / PDF EXPORT */
+  @media print {
+    body::before { display: none; }
+    .topbar { display: none; }
+    footer { display: none; }
+    .contact-form { display: none; }
+    .contact-wrapper { grid-template-columns: 1fr; }
+    body { background: #fff; color: #111; }
+    .hero-name { color: #111; }
+    .hero-name .accent { color: #c2580f; }
+    .hero-bio { border-left-color: #c2580f; color: #333; }
+    .hero-meta-item, .hero-title { color: #555; }
+    .hero-meta-item a { color: #1d4ed8; }
+    .section-cmd { color: #16a34a; }
+    .section-line { background: #ccc; }
+    .exp-card, .edu-card, .contact-info, .cert-card, .skill-item {
+      background: #f9f9f9;
+      border-color: #ddd;
+    }
+    .exp-card:hover::before { display: none; }
+    .exp-title, .edu-degree { color: #111; }
+    .exp-company, .edu-school { color: #c2580f; }
+    .exp-period, .edu-period {
+      color: #c2580f;
+      background: #fff4ed;
+      border-color: #f6c09b;
+    }
+    .exp-list li { color: #333; }
+    .exp-list li::before { color: #c2580f; }
+    .exp-list li strong { color: #92400e; }
+    .exp-skill-tag { color: #1d4ed8; background: #eff6ff; border-color: #bfdbfe; }
+    .skill-item { color: #333; }
+    .skill-dot { background: #16a34a; }
+    .cert-icon { color: #7c3aed; }
+    .cert-card { color: #333; }
+    .edu-cgpa { color: #16a34a; }
+    .contact-link { color: #333; border-color: #ddd; }
+    .c-icon { color: #1d4ed8; }
+    .contact-info h3 { color: #c2580f; }
+    .section-cmd::before { color: #888; }
+    a { color: #1d4ed8; }
+    .fade-in { opacity: 1; transform: none; }
+  }
   .fade-in {
     opacity: 0;
     transform: translateY(12px);
@@ -546,7 +622,6 @@
 </style>
 </head>
 <body>
-  
 
 <!-- TOP BAR -->
 <div class="topbar">
@@ -563,6 +638,7 @@
     <a href="#skills">skills</a>
     <a href="#certs">certs</a>
     <a href="#contact">contact</a>
+    <a href="#" onclick="exportPDF(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);">⬇ save as pdf</a>
   </nav>
 </div>
 
@@ -756,7 +832,7 @@
         <div class="edu-school">Rungta College of Engineering and Technology, CSVTU · Bhilai</div>
       </div>
       <div class="edu-meta">
-        <div>June 2010</div>
+        <span class="edu-period">2006 – 2010</span>
         <div class="edu-cgpa">8.71 CGPA</div>
       </div>
     </div>
@@ -815,6 +891,13 @@
 </footer>
 
 <script>
+  function exportPDF(e) {
+    e.preventDefault();
+    document.body.classList.add('printing');
+    window.print();
+    document.body.classList.remove('printing');
+  }
+
   function submitForm() {
     const name = document.getElementById('f-name').value.trim();
     const email = document.getElementById('f-email').value.trim();
