@@ -977,11 +977,13 @@
     document.body.classList.remove('printing');
   }
 
-  function submitForm() {
+  async function submitForm() {
     const name = document.getElementById('f-name').value.trim();
     const email = document.getElementById('f-email').value.trim();
+    const subject = document.getElementById('f-subject').value.trim();
     const msg = document.getElementById('f-msg').value.trim();
     const status = document.getElementById('form-status');
+    const btn = document.querySelector('.btn-submit');
 
     if (!name || !email || !msg) {
       status.textContent = '✗ error: name, email and message are required.';
@@ -996,18 +998,37 @@
       return;
     }
 
-    // Simulate send (wire up to backend/formspree/etc.)
     status.textContent = '⟳ transmitting...';
     status.className = 'form-status';
+    btn.disabled = true;
+    btn.textContent = '⟳ sending...';
 
-    setTimeout(() => {
-      status.textContent = '✓ message transmitted successfully.';
-      status.className = 'form-status';
-      document.getElementById('f-name').value = '';
-      document.getElementById('f-email').value = '';
-      document.getElementById('f-subject').value = '';
-      document.getElementById('f-msg').value = '';
-    }, 900);
+    try {
+      const res = await fetch('https://formspree.io/f/maqaozqa', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message: msg })
+      });
+
+      if (res.ok) {
+        status.textContent = '✓ message transmitted successfully.';
+        status.className = 'form-status';
+        document.getElementById('f-name').value = '';
+        document.getElementById('f-email').value = '';
+        document.getElementById('f-subject').value = '';
+        document.getElementById('f-msg').value = '';
+      } else {
+        const data = await res.json();
+        status.textContent = '✗ error: ' + (data?.errors?.[0]?.message || 'transmission failed. try again.');
+        status.className = 'form-status error';
+      }
+    } catch (err) {
+      status.textContent = '✗ error: network failure. check your connection.';
+      status.className = 'form-status error';
+    }
+
+    btn.disabled = false;
+    btn.textContent = '→ send_message()';
   }
 
   // Smooth scroll highlight
