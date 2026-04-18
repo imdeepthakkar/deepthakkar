@@ -554,12 +554,67 @@
 
   footer span { color: var(--orange); }
 
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    margin-left: 8px;
+  }
+  .hamburger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--orange);
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* MOBILE DROPDOWN NAV */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: 42px;
+    left: 0;
+    right: 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 8px 0;
+    flex-direction: column;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a:hover { color: var(--orange); background: rgba(249,115,22,0.07); }
+  .mobile-nav a.pdf-link { color: var(--orange); }
+
   /* RESPONSIVE */
   @media (max-width: 600px) {
     nav { display: none; }
+    .hamburger { display: flex; }
     .topbar-title { text-align: left; }
+    .topbar { height: 42px; }
   }
-
   /* PRINT / PDF EXPORT */
   @media print {
     body::before { display: none; }
@@ -640,6 +695,18 @@
     <a href="#contact">contact</a>
     <a href="#" onclick="exportPDF(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);">⬇ save as pdf</a>
   </nav>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#experience" onclick="closeMenu()">$ experience</a>
+  <a href="#skills" onclick="closeMenu()">$ skills</a>
+  <a href="#certs" onclick="closeMenu()">$ certs</a>
+  <a href="#contact" onclick="closeMenu()">$ contact</a>
+  <a href="#" class="pdf-link" onclick="exportPDF(event);closeMenu()">⬇ save as pdf</a>
 </div>
 
 <div class="container">
@@ -891,6 +958,18 @@
 </footer>
 
 <script>
+  function toggleMenu() {
+    const btn = document.getElementById('hamburger');
+    const nav = document.getElementById('mobile-nav');
+    btn.classList.toggle('open');
+    nav.classList.toggle('open');
+  }
+
+  function closeMenu() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobile-nav').classList.remove('open');
+  }
+
   function exportPDF(e) {
     e.preventDefault();
     document.body.classList.add('printing');
