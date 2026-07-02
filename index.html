@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deep Thakkar — Technical Lead</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root {
     --bg: #0d0f12;
@@ -693,6 +694,9 @@
     --text-muted: #64748b;
     --cursor: #ea580c;
   }
+  body.light-mode::before {
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -721,7 +725,7 @@
     <a href="#certs">certs</a>
     <a href="#contact">contact</a>
     <a href="#" onclick="exportPDF(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);">⬇ save as pdf</a>
-    <a href="#" id="theme-toggle" onclick="toggleTheme(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);margin-left:8px;">[ light_mode ]</a>
+    <a href="#" id="theme-toggle" onclick="toggleTheme(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);margin-left:8px;">[ <i class="fa-solid fa-moon"></i> ]</a>
   </nav>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -735,7 +739,7 @@
   <a href="#certs" onclick="closeMenu()">$ certs</a>
   <a href="#contact" onclick="closeMenu()">$ contact</a>
   <a href="#" class="pdf-link" onclick="exportPDF(event);closeMenu()">⬇ save as pdf</a>
-  <a href="#" id="mobile-theme-toggle" class="pdf-link" onclick="toggleTheme(event);closeMenu()" style="border-top:1px solid var(--border);">[ light_mode ]</a>
+  <a href="#" id="mobile-theme-toggle" class="pdf-link" onclick="toggleTheme(event);closeMenu()" style="border-top:1px solid var(--border);">$ <i class="fa-solid fa-moon"></i></a>
 </div>
 
 <div class="container">
@@ -1086,10 +1090,17 @@
   function updateThemeToggleLabels(isLight) {
     const toggleBtn = document.getElementById('theme-toggle');
     const mobileToggleBtn = document.getElementById('mobile-theme-toggle');
-    const label = isLight ? '[ dark_mode ]' : '[ light_mode ]';
     
-    if (toggleBtn) toggleBtn.textContent = label;
-    if (mobileToggleBtn) mobileToggleBtn.textContent = label;
+    const desktopHtml = isLight 
+      ? '[ <i class="fa-solid fa-sun"></i> ]' 
+      : '[ <i class="fa-solid fa-moon"></i> ]';
+      
+    const mobileHtml = isLight 
+      ? '$ <i class="fa-solid fa-sun"></i>' 
+      : '$ <i class="fa-solid fa-moon"></i>';
+    
+    if (toggleBtn) toggleBtn.innerHTML = desktopHtml;
+    if (mobileToggleBtn) mobileToggleBtn.innerHTML = mobileHtml;
   }
 
   document.addEventListener('DOMContentLoaded', () => {
