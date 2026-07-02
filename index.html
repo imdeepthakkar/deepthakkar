@@ -677,6 +677,14 @@
 </style>
 </head>
 <body>
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
+    }
+  })();
+</script>
 
 <!-- TOP BAR -->
 <div class="topbar">
@@ -694,6 +702,7 @@
     <a href="#certs">certs</a>
     <a href="#contact">contact</a>
     <a href="#" onclick="exportPDF(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);">⬇ save as pdf</a>
+    <a href="#" id="theme-toggle" onclick="toggleTheme(event)" style="color:var(--orange);border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.08);margin-left:8px;">[ light_mode ]</a>
   </nav>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -707,6 +716,7 @@
   <a href="#certs" onclick="closeMenu()">$ certs</a>
   <a href="#contact" onclick="closeMenu()">$ contact</a>
   <a href="#" class="pdf-link" onclick="exportPDF(event);closeMenu()">⬇ save as pdf</a>
+  <a href="#" id="mobile-theme-toggle" class="pdf-link" onclick="toggleTheme(event);closeMenu()" style="border-top:1px solid var(--border);">[ light_mode ]</a>
 </div>
 
 <div class="container">
