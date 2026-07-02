@@ -1070,6 +1070,32 @@
     });
   }, { threshold: 0.1 });
   cards.forEach(c => observer.observe(c));
+
+  // Theme toggle functions
+  function toggleTheme(e) {
+    if (e) e.preventDefault();
+    const body = document.body;
+    body.classList.toggle('light-mode');
+    
+    const isLight = body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    
+    updateThemeToggleLabels(isLight);
+  }
+
+  function updateThemeToggleLabels(isLight) {
+    const toggleBtn = document.getElementById('theme-toggle');
+    const mobileToggleBtn = document.getElementById('mobile-theme-toggle');
+    const label = isLight ? '[ dark_mode ]' : '[ light_mode ]';
+    
+    if (toggleBtn) toggleBtn.textContent = label;
+    if (mobileToggleBtn) mobileToggleBtn.textContent = label;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const isLight = document.body.classList.contains('light-mode');
+    updateThemeToggleLabels(isLight);
+  });
 </script>
 </body>
 </html>
