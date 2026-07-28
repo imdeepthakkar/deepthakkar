@@ -1,1 +1,46 @@
+# Vercel
 .vercel
+
+# Environment & secrets
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+*.env
+
+# API keys / credentials files
+secrets.json
+credentials.json
+config.secret.js
+config.secret.ts
+api-keys.json
+api-keys.js
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.secret
+*.secrets
+
+# Common credential patterns
+*secret*
+*credential*
+*password*
+*passwd*
+*token*
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
