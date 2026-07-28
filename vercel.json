@@ -1,0 +1,108 @@
+{
+  "version": 2,
+  "name": "deepthakkar",
+  "builds": [
+    {
+      "src": "api/proxy.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "portfolio.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "java.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/weather.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "weather/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/greencart",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/greencart/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/luxtravel",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/luxtravel/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/ai-job-search",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/ai-job-search/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/github-repo-manager",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/github-repo-manager/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/portfolio",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/portfolio/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/java-interview",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/java-interview/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/rejseplannen",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/rejseplannen/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/java",
+      "dest": "/java.html"
+    },
+    {
+      "src": "/weather",
+      "dest": "/weather/index.html"
+    },
+    {
+      "src": "/profile",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/profile/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

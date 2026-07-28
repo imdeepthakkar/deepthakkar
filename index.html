@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Thakkar - Application Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --border: #d1d1d6;
+            --text: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent: #007aff;
+            --hover-bg: rgba(0, 0, 0, 0.04);
+            --shadow: 0 20px 40px -10px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+            --terminal-text: #a1a1a6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+        /* Background Terminal/Coding Elements */
+        .bg-code {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            color: var(--terminal-text);
+            opacity: 0.3;
+            z-index: 0;
+            white-space: pre;
+            pointer-events: none;
+        }
+        .code-1 { top: 10%; left: 5%; }
+        .code-2 { top: 60%; left: 10%; }
+        .code-3 { top: 20%; right: 10%; text-align: right; }
+        .code-4 { bottom: 15%; right: 5%; }
+
+        .portal-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: var(--shadow);
+            z-index: 2;
+            animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .mac-header {
+            background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+            height: 38px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .mac-controls {
+            display: flex;
+            gap: 8px;
+        }
+        .mac-btn {
+            width: 12px; height: 12px; border-radius: 50%;
+        }
+        .close { background-color: #ff5f56; border: 1px solid #e0443e; }
+        .minimize { background-color: #ffbd2e; border: 1px solid #dea123; }
+        .maximize { background-color: #27c93f; border: 1px solid #1aab29; }
+        
+        .header-title {
+            flex: 1;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin-right: 56px; /* Offset to center title */
+        }
+
+        .card-content {
+            padding: 30px 40px 40px;
+            text-align: center;
+        }
+
+        .avatar-area { margin-bottom: 20px; }
+        .avatar {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: linear-gradient(135deg, #007aff, #5ac8fa);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; color: white; font-weight: 700;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+        h1 {
+            font-size: 28px; font-weight: 700; margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .subtitle {
+            font-size: 14px; color: var(--text-secondary); margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .links-grid { display: flex; flex-direction: column; gap: 12px; }
+        .portal-link {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px; background: rgba(255,255,255,0.5);
+            border: 1px solid var(--border); border-radius: 8px;
+            text-decoration: none; color: var(--text); font-weight: 600; font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        .portal-link:hover {
+            background: var(--hover-bg); transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .link-left { display: flex; align-items: center; gap: 14px; }
+        .link-left i {
+            font-size: 18px; width: 24px; color: var(--accent); text-align: center;
+        }
+        .link-right {
+            font-size: 12px; color: var(--text-secondary); opacity: 0;
+            transition: transform 0.2s, opacity 0.2s; transform: translateX(-10px);
+        }
+        .portal-link:hover .link-right { opacity: 1; transform: translateX(0); }
+
+        .footer {
+            margin-top: 35px; display: flex; justify-content: center; gap: 20px; font-size: 18px;
+        }
+        .footer-icon {
+            color: var(--text-secondary); transition: color 0.2s;
+        }
+        .footer-icon:hover { color: var(--text); }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @media (max-width: 480px) {
+            .card-content { padding: 30px 20px; }
+            h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Terminal Elements -->
+    <div class="bg-code code-1">
+const initApp = async () => {
+  console.log("Loading modules...");
+  await connectDatabase();
+  startServer(8080);
+};
+    </div>
+    <div class="bg-code code-2">
+deept@macbook-pro ~ % cd /projects
+deept@macbook-pro projects % npm run dev
+
+> portal@1.0.0 dev
+> next dev -p 3000
+
+ready - started server on 0.0.0.0:3000
+    </div>
+    <div class="bg-code code-3">
+function proxyRequest(req, res) {
+  const target = getTargetHost();
+  return https.request({
+    hostname: target,
+    path: req.url
+  });
+}
+    </div>
+    <div class="bg-code code-4">
+git commit -m "feat: added new mac theme"
+[main 4f8b2a1] feat: added new mac theme
+ 1 file changed, 150 insertions(+)
+    </div>
+
+    <div class="portal-card">
+        <div class="mac-header">
+            <div class="mac-controls">
+                <div class="mac-btn close"></div>
+                <div class="mac-btn minimize"></div>
+                <div class="mac-btn maximize"></div>
+            </div>
+            <div class="header-title">Deep_Thakkar_Portal — bash — 80x24</div>
+        </div>
+        <div class="card-content">
+            <div class="avatar-area">
+                <div class="avatar">DT</div>
+            </div>
+            <h1>Deep Thakkar</h1>
+            <div class="subtitle">Developer Workspace</div>
+
+            <div class="links-grid">
+                <a href="/weather" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-cloud-sun"></i>
+                        <span>Weather App</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/greencart" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-leaf"></i>
+                        <span>GreenCart DK</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/ai-job-search" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span>AI Job Search</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/github-repo-manager" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>GitHub Repo Manager</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/java-interview" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Java Coding Interview</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/portfolio" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Portfolio</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/rejseplannen" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-train"></i>
+                        <span>Rejseplanen</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+            </div>
+
+            <div class="footer">
+                <a href="https://imdeepthakkar.github.io/deepthakkar/" target="_blank" class="footer-icon" title="Portfolio"><i class="fa-solid fa-globe"></i></a>
+                <a href="https://linkedin.com/in/imdeepthakkar" target="_blank" class="footer-icon" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
