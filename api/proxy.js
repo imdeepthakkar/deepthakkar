@@ -76,12 +76,12 @@ module.exports = (req, res) => {
     cleanPath = reqUrl.replace('/system-design', '');
   } else if (reqUrl.startsWith('/personal-calendar/') || reqUrl === '/personal-calendar') {
     targetHost = 'personal-calendar-sigma-jet.vercel.app';
-    // Strip /personal-calendar prefix - the calendar app serves at root (/)
-    cleanPath = reqUrl.replace('/personal-calendar', '') || '/';
+    // Forward the prefix to the Next.js app which has basePath configured
+    cleanPath = reqUrl;
   } else if (reqUrl.startsWith('/personal-calander/') || reqUrl === '/personal-calander') {
     targetHost = 'personal-calendar-sigma-jet.vercel.app';
-    // Typo alias - also strip the prefix
-    cleanPath = reqUrl.replace('/personal-calander', '') || '/';
+    // Typo alias - rewrite to correct prefix
+    cleanPath = reqUrl.replace('/personal-calander', '/personal-calendar');
   } else if (reqUrl === '/profile' || reqUrl.startsWith('/profile/')) {
     targetHost = 'deepthakkar-profile.vercel.app';
     cleanPath = reqUrl;
