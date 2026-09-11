@@ -31,7 +31,7 @@
             justify-content: center;
             padding: 20px;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
             backdrop-filter: blur(20px);
         }
         /* Background Terminal/Coding Elements */
@@ -57,6 +57,9 @@
             border-radius: 12px;
             width: 100%;
             max-width: 520px;
+            max-height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
             box-shadow: var(--shadow);
             z-index: 2;
             animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -95,6 +98,32 @@
         .card-content {
             padding: 30px 40px 40px;
             text-align: center;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        /* Sleek Mac-like Scrollbar that appears on hover */
+        .card-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .card-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .card-content::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 4px;
+        }
+        .card-content:hover::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .card-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hide scrollbar for body */
+        body::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
         }
 
         .avatar-area { margin-bottom: 20px; }
@@ -212,6 +241,13 @@ git commit -m "feat: added new mac theme"
                     </div>
                     <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>
+                <a href="/personal-calendar" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <span>Personal Calendar (Heracles)</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
                 <a href="/greencart" class="portal-link">
                     <div class="link-left">
                         <i class="fa-solid fa-leaf"></i>
@@ -240,6 +276,20 @@ git commit -m "feat: added new mac theme"
                     </div>
                     <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>
+                <a href="/scrum-master" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Scrum Master 150 Rapidfire</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/scrum-scenarios" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-people-group"></i>
+                        <span>Scrum Master Scenarios</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
                 <a href="/portfolio" class="portal-link">
                     <div class="link-left">
                         <i class="fa-solid fa-user-tie"></i>
@@ -251,6 +301,13 @@ git commit -m "feat: added new mac theme"
                     <div class="link-left">
                         <i class="fa-solid fa-train"></i>
                         <span>Rejseplanen</span>
+                    </div>
+                    <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
+                </a>
+                <a href="/system-design" class="portal-link">
+                    <div class="link-left">
+                        <i class="fa-solid fa-network-wired"></i>
+                        <span>System Design</span>
                     </div>
                     <div class="link-right"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>

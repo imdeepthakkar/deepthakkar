@@ -31,13 +31,29 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
-  if (reqUrl === '/portfolio') {
-    res.writeHead(308, { Location: '/portfolio/' });
+  if (reqUrl === '/scrum-master') {
+    res.writeHead(308, { Location: '/scrum-master/' });
     res.end();
     return;
   }
+
   if (reqUrl === '/rejseplannen') {
     res.writeHead(308, { Location: '/rejseplannen/' });
+    res.end();
+    return;
+  }
+  if (reqUrl === '/system-design') {
+    res.writeHead(308, { Location: '/system-design/' });
+    res.end();
+    return;
+  }
+  if (reqUrl === '/personal-calendar') {
+    res.writeHead(308, { Location: '/personal-calendar/' });
+    res.end();
+    return;
+  }
+  if (reqUrl === '/personal-calander') {
+    res.writeHead(308, { Location: '/personal-calendar/' });
     res.end();
     return;
   }
@@ -58,12 +74,21 @@ module.exports = (req, res) => {
   } else if (reqUrl.startsWith('/java-interview/')) {
     targetHost = 'java-coding-interview.vercel.app';
     cleanPath = reqUrl.replace('/java-interview', '');
-  } else if (reqUrl.startsWith('/portfolio/')) {
-    targetHost = 'imdeepthakkar.vercel.app';
-    cleanPath = reqUrl.replace('/portfolio', '');
+  } else if (reqUrl.startsWith('/scrum-master/')) {
+    targetHost = 'website-jade-seven-89.vercel.app';
+    cleanPath = reqUrl.replace('/scrum-master', '');
   } else if (reqUrl.startsWith('/rejseplannen/')) {
     targetHost = 'rejseplannen.vercel.app';
     cleanPath = reqUrl.replace('/rejseplannen', '');
+  } else if (reqUrl.startsWith('/system-design/')) {
+    targetHost = 'system-design-learning-gold.vercel.app';
+    cleanPath = reqUrl.replace('/system-design', '');
+  } else if (reqUrl.startsWith('/personal-calendar/') || reqUrl === '/personal-calendar') {
+    targetHost = 'personal-calander.vercel.app';
+    cleanPath = reqUrl;
+  } else if (reqUrl.startsWith('/personal-calander/') || reqUrl === '/personal-calander') {
+    targetHost = 'personal-calander.vercel.app';
+    cleanPath = reqUrl.replace('/personal-calander', '/personal-calendar');
   } else if (reqUrl === '/profile' || reqUrl.startsWith('/profile/')) {
     targetHost = 'deepthakkar-profile.vercel.app';
     cleanPath = reqUrl;
