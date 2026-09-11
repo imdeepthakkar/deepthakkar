@@ -75,11 +75,11 @@ module.exports = (req, res) => {
     targetHost = 'system-design-learning-gold.vercel.app';
     cleanPath = reqUrl.replace('/system-design', '');
   } else if (reqUrl.startsWith('/personal-calendar/') || reqUrl === '/personal-calendar') {
-    targetHost = 'personal-calander.vercel.app';
+    targetHost = 'personal-calendar.vercel.app';
     // Strip /personal-calendar prefix - the calendar app serves at root (/)
     cleanPath = reqUrl.replace('/personal-calendar', '') || '/';
   } else if (reqUrl.startsWith('/personal-calander/') || reqUrl === '/personal-calander') {
-    targetHost = 'personal-calander.vercel.app';
+    targetHost = 'personal-calendar.vercel.app';
     // Typo alias - also strip the prefix
     cleanPath = reqUrl.replace('/personal-calander', '') || '/';
   } else if (reqUrl === '/profile' || reqUrl.startsWith('/profile/')) {
