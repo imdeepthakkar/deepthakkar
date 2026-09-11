@@ -47,16 +47,7 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
-  if (reqUrl === '/personal-calendar') {
-    res.writeHead(308, { Location: '/personal-calendar/' });
-    res.end();
-    return;
-  }
-  if (reqUrl === '/personal-calander') {
-    res.writeHead(308, { Location: '/personal-calendar/' });
-    res.end();
-    return;
-  }
+  // NOTE: /personal-calendar exact match is handled in the routing block below
 
   // Determine target host based on request URL prefix
   if (reqUrl.startsWith('/greencart/')) {
@@ -85,10 +76,12 @@ module.exports = (req, res) => {
     cleanPath = reqUrl.replace('/system-design', '');
   } else if (reqUrl.startsWith('/personal-calendar/') || reqUrl === '/personal-calendar') {
     targetHost = 'personal-calander.vercel.app';
-    cleanPath = reqUrl;
+    // Strip /personal-calendar prefix - the calendar app serves at root (/)
+    cleanPath = reqUrl.replace('/personal-calendar', '') || '/';
   } else if (reqUrl.startsWith('/personal-calander/') || reqUrl === '/personal-calander') {
     targetHost = 'personal-calander.vercel.app';
-    cleanPath = reqUrl.replace('/personal-calander', '/personal-calendar');
+    // Typo alias - also strip the prefix
+    cleanPath = reqUrl.replace('/personal-calander', '') || '/';
   } else if (reqUrl === '/profile' || reqUrl.startsWith('/profile/')) {
     targetHost = 'deepthakkar-profile.vercel.app';
     cleanPath = reqUrl;
