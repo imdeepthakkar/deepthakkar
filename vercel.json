@@ -9,30 +9,6 @@
     {
       "src": "index.html",
       "use": "@vercel/static"
-    },
-    {
-      "src": "portfolio.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "java.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "scrum-master.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "scrum-scenarios.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "api/weather.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "weather/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -70,7 +46,11 @@
     },
     {
       "src": "/portfolio",
-      "dest": "/portfolio.html"
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/portfolio/(.*)",
+      "dest": "api/proxy.js"
     },
     {
       "src": "/java-interview",
@@ -90,7 +70,11 @@
     },
     {
       "src": "/java",
-      "dest": "/java.html"
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/java/(.*)",
+      "dest": "api/proxy.js"
     },
     {
       "src": "/scrum-master",
@@ -102,32 +86,19 @@
     },
     {
       "src": "/scrum-scenarios",
-      "dest": "/scrum-scenarios.html"
+      "dest": "api/proxy.js"
     },
     {
-      "src": "/weather/sw.js",
-      "headers": {
-        "cache-control": "public, max-age=0, must-revalidate",
-        "Service-Worker-Allowed": "/weather"
-      },
-      "dest": "/weather/sw.js"
+      "src": "/scrum-scenarios/(.*)",
+      "dest": "api/proxy.js"
     },
     {
-      "src": "/weather/manifest.webmanifest",
-      "headers": {
-        "Content-Type": "application/manifest+json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate"
-      },
-      "dest": "/weather/manifest.webmanifest"
+      "src": "/weather",
+      "dest": "api/proxy.js"
     },
     {
-      "src": "/weather$",
-      "headers": { "Location": "/weather/" },
-      "status": 308
-    },
-    {
-      "src": "/weather/",
-      "dest": "/weather/index.html"
+      "src": "/weather/(.*)",
+      "dest": "api/proxy.js"
     },
     {
       "src": "/system-design",
