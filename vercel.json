@@ -1,0 +1,169 @@
+{
+  "version": 2,
+  "name": "deepthakkar",
+  "builds": [
+    {
+      "src": "api/proxy.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "portfolio.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "java.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "scrum-master.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "scrum-scenarios.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "api/weather.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "weather/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/greencart",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/greencart/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/luxtravel",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/luxtravel/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/ai-job-search",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/ai-job-search/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/github-repo-manager",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/github-repo-manager/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/portfolio",
+      "dest": "/portfolio.html"
+    },
+    {
+      "src": "/java-interview",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/java-interview/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/rejseplannen",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/rejseplannen/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/java",
+      "dest": "/java.html"
+    },
+    {
+      "src": "/scrum-master",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/scrum-master/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/scrum-scenarios",
+      "dest": "/scrum-scenarios.html"
+    },
+    {
+      "src": "/weather/sw.js",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate",
+        "Service-Worker-Allowed": "/weather"
+      },
+      "dest": "/weather/sw.js"
+    },
+    {
+      "src": "/weather/manifest.webmanifest",
+      "headers": {
+        "Content-Type": "application/manifest+json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate"
+      },
+      "dest": "/weather/manifest.webmanifest"
+    },
+    {
+      "src": "/weather$",
+      "headers": { "Location": "/weather/" },
+      "status": 308
+    },
+    {
+      "src": "/weather/",
+      "dest": "/weather/index.html"
+    },
+    {
+      "src": "/system-design",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/system-design/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/profile",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/profile/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/personal-calendar",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/personal-calendar/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/personal-calander",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/personal-calander/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}
