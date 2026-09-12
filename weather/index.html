@@ -31,7 +31,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#3EC6FF">
-<title>Sunny · weather</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Live Weather">
+<script>
+if (location.pathname === '/weather') {
+  location.replace('/weather/' + location.search + location.hash);
+}
+</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%233EC6FF'/><circle cx='40' cy='24' r='14' fill='%23FFC93C'/><circle cx='37' cy='21' r='6' fill='%23FFE066' opacity='0.85'/><g fill='%23FFFFFF'><ellipse cx='30' cy='42' rx='18' ry='10'/><circle cx='20' cy='39' r='9'/><circle cx='31' cy='33' r='12'/><circle cx='41' cy='38' r='9'/></g></svg>">
+<link rel="alternate icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=4">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=4">
+<link rel="manifest" href="manifest.webmanifest?v=4">
+<title>Live Weather</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -330,12 +343,129 @@ body.widget #wcard{display:flex}
   .zap{animation:zap 2.6s ease-in-out infinite}
   @keyframes zap{0%,88%,100%{opacity:1}92%{opacity:.25}95%{opacity:1}}
 }
+
+/* ══ Weather Animations ══ */
+.weather-container{position:fixed;inset:0;z-index:2;overflow:hidden;pointer-events:none;}
+
+/* Sun */
+.sun{position:absolute;top:13%;left:50%;transform:translateX(-50%);width:140px;height:140px;
+  background:radial-gradient(circle at 35% 35%,#fff176,#ffca28 50%,#ff9800);
+  border-radius:50%;box-shadow:0 0 0 18px rgba(255,220,0,.15),0 0 60px rgba(255,200,0,.6),0 0 120px rgba(255,150,0,.4);
+  animation:sunPulse 4s ease-in-out infinite alternate;}
+.sun::before{content:'';position:absolute;inset:-18px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,235,100,.3),transparent 70%);
+  animation:sunGlow 4s ease-in-out infinite alternate;}
+@keyframes sunPulse{0%{box-shadow:0 0 0 18px rgba(255,220,0,.15),0 0 60px rgba(255,200,0,.6),0 0 120px rgba(255,150,0,.4);}
+  100%{box-shadow:0 0 0 30px rgba(255,220,0,.1),0 0 90px rgba(255,200,0,.8),0 0 160px rgba(255,150,0,.5);}}
+@keyframes sunGlow{0%{opacity:.4;transform:scale(1);}100%{opacity:.8;transform:scale(1.15);}}
+
+.cloud-anim{position:absolute;border-radius:60px;opacity:.92;pointer-events:none;will-change:transform;}
+.cloud-anim::before,.cloud-anim::after{content:'';position:absolute;border-radius:50%;}
+
+/* cloud sizes / positions / speeds (overrides per class) */
+.c1{width:200px;height:66px;background:#fff;top:12%;animation:mc1 22s linear infinite 0s;}
+.c1::before{width:90px;height:90px;background:#fff;top:-44px;left:30px;}
+.c1::after {width:110px;height:110px;background:#fff;top:-58px;left:82px;}
+
+.c2{width:150px;height:52px;background:#eef5ff;top:28%;opacity:.8;animation:mc2 30s linear infinite 4s;}
+.c2::before{width:70px;height:70px;background:#eef5ff;top:-32px;left:22px;}
+.c2::after {width:82px;height:82px;background:#eef5ff;top:-44px;left:62px;}
+
+.c3{width:240px;height:76px;background:#fff;top:18%;opacity:.7;animation:mc3 26s linear infinite 10s;}
+.c3::before{width:100px;height:100px;background:#fff;top:-50px;left:36px;}
+.c3::after {width:120px;height:120px;background:#fff;top:-66px;left:96px;}
+
+.c4{width:120px;height:42px;background:#deeeff;top:42%;opacity:.65;animation:mc4 34s linear infinite 2s;}
+.c4::before{width:56px;height:56px;background:#deeeff;top:-26px;left:16px;}
+.c4::after {width:66px;height:66px;background:#deeeff;top:-36px;left:50px;}
+
+.c5{width:180px;height:58px;background:#f0f7ff;top:52%;opacity:.55;animation:mc5 38s linear infinite 16s;}
+.c5::before{width:80px;height:80px;background:#f0f7ff;top:-38px;left:26px;}
+.c5::after {width:96px;height:96px;background:#f0f7ff;top:-52px;left:74px;}
+
+/* independent keyframes so speeds differ cleanly */
+@keyframes mc1{0%{left:-240px;}100%{left:115vw;}}
+@keyframes mc2{0%{left:-200px;}100%{left:115vw;}}
+@keyframes mc3{0%{left:-280px;}100%{left:115vw;}}
+@keyframes mc4{0%{left:-160px;}100%{left:115vw;}}
+@keyframes mc5{0%{left:-220px;}100%{left:115vw;}}
+
+/* Gap-filler clouds — sit in the space between hero and cards (~30%-50%) */
+.c6{width:130px;height:44px;background:rgba(255,255,255,.85);top:32%;opacity:.75;animation:mc6 20s linear infinite 3s;}
+.c6::before{width:62px;height:62px;background:rgba(255,255,255,.85);top:-30px;left:18px;}
+.c6::after {width:74px;height:74px;background:rgba(255,255,255,.85);top:-40px;left:54px;}
+
+.c7{width:90px;height:32px;background:rgba(240,248,255,.9);top:40%;opacity:.6;animation:mc7 28s linear infinite 9s;}
+.c7::before{width:44px;height:44px;background:rgba(240,248,255,.9);top:-20px;left:12px;}
+.c7::after {width:52px;height:52px;background:rgba(240,248,255,.9);top:-28px;left:38px;}
+
+.c8{width:170px;height:54px;background:rgba(255,255,255,.7);top:48%;opacity:.5;animation:mc8 36s linear infinite 14s;}
+.c8::before{width:78px;height:78px;background:rgba(255,255,255,.7);top:-36px;left:24px;}
+.c8::after {width:90px;height:90px;background:rgba(255,255,255,.7);top:-50px;left:70px;}
+
+@keyframes mc6{0%{left:-170px;}100%{left:115vw;}}
+@keyframes mc7{0%{left:-130px;}100%{left:115vw;}}
+@keyframes mc8{0%{left:-210px;}100%{left:115vw;}}
+
+/* Rain */
+.rain-drop{position:absolute;width:2px;height:28px;
+  background:linear-gradient(transparent,rgba(255,255,255,.85));
+  animation:rainFall linear infinite;border-radius:2px;}
+@keyframes rainFall{0%{transform:translateY(-60px) scaleY(.4);opacity:0;}
+  15%{opacity:1;transform:translateY(0) scaleY(1);}
+  85%{opacity:.85;}
+  100%{transform:translateY(100vh);opacity:0;}}
+
+/* Moon */
+.moon-anim{position:absolute;top:12%;left:54%;width:110px;height:110px;border-radius:50%;
+  box-shadow:-26px 26px 0 4px #f6f1d5,0 0 40px rgba(246,241,213,.4);
+  animation:floatMoon 7s ease-in-out infinite alternate;}
+@keyframes floatMoon{0%{transform:translateY(0) translateX(0);}
+  100%{transform:translateY(14px) translateX(-10px);}}
+
+/* Stars */
+.star-anim{position:absolute;background:white;border-radius:50%;
+  animation:twinkle infinite alternate ease-in-out;}
+@keyframes twinkle{0%{opacity:.08;transform:scale(.4);}
+  100%{opacity:1;transform:scale(1.6);box-shadow:0 0 6px 2px rgba(255,255,255,.8);}}
+
+/* ══ Outfit Card ══ */
+.outfit-card{margin-top:10px;border-radius:28px;overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,.96) 0%,rgba(240,248,255,.96) 100%);
+  box-shadow:0 18px 44px rgba(23,45,90,.20);}
+.outfit-header{display:flex;align-items:center;justify-content:space-between;
+  padding:17px 19px 12px;}
+.outfit-title{font-size:13px;font-weight:800;color:var(--ink);}
+.outfit-sub{font-size:11.5px;font-weight:700;color:var(--soft);}
+.outfit-items{display:flex;flex-wrap:wrap;gap:8px;padding:0 19px 18px;}
+.outfit-pill{display:inline-flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:700;
+  animation:pillPop .4s cubic-bezier(.34,1.56,.5,1) backwards;}
+@keyframes pillPop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+.pill-umbrella{background:#E8F4FF;color:#1565C0;}
+.pill-raincoat{background:#E3F2FD;color:#0D47A1;}
+.pill-boots{background:#E0F7FA;color:#006064;}
+.pill-sunglasses{background:#FFF9C4;color:#F57F17;}
+.pill-sunscreen{background:#FFF3E0;color:#E65100;}
+.pill-hat{background:#FFF8E1;color:#FF8F00;}
+.pill-light{background:#F3E5F5;color:#6A1B9A;}
+.pill-heavy{background:#E8EAF6;color:#283593;}
+.pill-layers{background:#E8F5E9;color:#1B5E20;}
+.pill-scarf{background:#FCE4EC;color:#880E4F;}
+.pill-gloves{background:#F1F8E9;color:#33691E;}
+.pill-jacket{background:#ECEFF1;color:#263238;}
+.pill-tshirt{background:#E0F2F1;color:#004D40;}
+.pill-shorts{background:#FFF9C4;color:#F9A825;}
+.pill-windbreaker{background:#E8EAF6;color:#1A237E;}
+.pill-mask{background:#FCE4EC;color:#880E4F;}
 </style>
+
 </head>
 <body>
 <div id="skyCss"></div>
-<div id="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
-<canvas id="sky" aria-hidden="true"></canvas>
+<div id="weather-container" class="weather-container"></div>
+<div id="blobs" aria-hidden="true" style="display:none"><i></i><i></i><i></i></div>
+<canvas id="sky" aria-hidden="true" style="display:none"></canvas>
 <div id="flash" aria-hidden="true"></div>
 
 <div id="wcard" aria-live="polite">
@@ -382,7 +512,8 @@ body.widget #wcard{display:flex}
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s7.5-6.9 7.5-12a7.5 7.5 0 1 0-15 0c0 5.1 7.5 12 7.5 12Zm0-9.2a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6Z"/></svg>
     </button>
     <span id="place">—</span>
-    <button id="changeBtn">Search</button>
+    <button id="installBtn" title="Install App" aria-label="Install App" style="margin-left:auto;display:inline-flex;align-items:center;gap:4px">📲 Install</button>
+    <button id="changeBtn" style="margin-left:0">Search</button>
     <button id="refresh" title="Refresh now" aria-label="Refresh now">
       <svg class="rr" width="36" height="36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="fg" id="arc" cx="18" cy="18" r="15" stroke-dasharray="94.2" stroke-dashoffset="0" stroke-linecap="round"/></svg>
       <span class="dot"></span>
@@ -403,10 +534,15 @@ body.widget #wcard{display:flex}
     <p><span id="coMain" style="display:block">Reading the forecast…</span><span id="coSub"></span></p>
   </section>
 
-  <section class="callout rv">
-    <div class="cIc" id="wearIc" style="font-size:32px;display:grid;place-items:center;">👕</div>
-    <p><span id="wearMain" style="display:block">Figuring out what to wear...</span><span id="wearSub"></span></p>
+  <section class="outfit-card rv" id="outfitCard">
+    <div class="outfit-header">
+      <span class="outfit-title">👔 What to wear</span>
+      <span class="outfit-sub" id="outfitSub">Based on current conditions</span>
+    </div>
+    <div class="outfit-items" id="outfitItems"></div>
   </section>
+  </section>
+
 
   <section class="four rv">
     <div class="tile t-wind tappable" data-k="wind" role="button" tabindex="0">
@@ -424,26 +560,35 @@ body.widget #wcard{display:flex}
     </div>
     <div class="tile t-hum tappable" data-k="hum" role="button" tabindex="0">
       <div class="k"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5s6 7 6 11.2a6 6 0 1 1-12 0C6 9.5 12 2.5 12 2.5Z"/></svg>Humidity</div>
-      <div class="row"><div class="v" id="hVal"><span class="sk" style="width:40px"></span></div></div>
+      <div class="row">
+        <div class="v" id="hVal"><span class="sk" style="width:40px"></span></div>
+        <svg class="gauge" viewBox="0 0 44 44" aria-hidden="true">
+          <circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="4"/>
+          <circle id="humArc" cx="22" cy="22" r="17" fill="none" stroke="#0E3560" stroke-width="4" stroke-linecap="round" stroke-dasharray="107" stroke-dashoffset="107" style="transition:stroke-dashoffset 1s cubic-bezier(.34,1.4,.5,1); transform: rotate(-90deg); transform-origin: 50% 50%;"/>
+        </svg>
+      </div>
       <div class="n" id="hNote">—</div>
     </div>
     <div class="tile t-feel tappable" data-k="feel" role="button" tabindex="0">
       <div class="k"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4.4"/><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></g></svg>Feels like</div>
-      <div class="row"><div class="v" id="fVal"><span class="sk" style="width:40px"></span></div></div>
+      <div class="row">
+        <div class="v" id="fVal"><span class="sk" style="width:40px"></span></div>
+        <svg class="gauge" viewBox="0 0 44 44" aria-hidden="true" style="overflow:visible">
+          <rect x="18" y="4" width="8" height="24" rx="4" fill="rgba(255,255,255,.5)"/>
+          <circle cx="22" cy="30" r="7.5" fill="rgba(255,255,255,.5)"/>
+          <rect id="tempFill" x="18" y="26" width="8" height="2" fill="#5C2A0C" style="transition: height 1s, y 1s;"/>
+          <circle cx="22" cy="30" r="7.5" fill="#5C2A0C"/>
+        </svg>
+      </div>
       <div class="n" id="fNote">—</div>
     </div>
     <div class="tile t-aqi tappable" id="aqiTile" data-k="aqi" role="button" tabindex="0">
-      <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 8h11a3 3 0 1 0-3-3"/><path d="M4 13h13a3.5 3.5 0 1 1-3.5 3.5"/><path d="M4 18h5"/></svg>Air</div>
+      <div class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 8h11a3 3 0 1 0-3-3"/><path d="M4 13h13a3.5 3.5 0 1 1-3.5 3.5"/><path d="M4 18h5"/></svg>Air Quality Index</div>
       <div class="row">
         <div class="v" id="aVal"><span class="sk" style="width:34px"></span></div>
-        <svg class="gauge" viewBox="0 0 44 44" aria-hidden="true">
-          <path d="M8 33 A 17 17 0 1 1 36 33" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="5" stroke-linecap="round"/>
-          <path id="aqArc" d="M8 33 A 17 17 0 1 1 36 33" fill="none" stroke="#301B60" stroke-width="5"
-            stroke-linecap="round" stroke-dasharray="80" stroke-dashoffset="80"
-            style="transition:stroke-dashoffset 1s cubic-bezier(.34,1.4,.5,1),stroke .5s"/>
-        </svg>
+        <div id="aBoy" style="font-size:38px; line-height:1; margin-left:auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));">👦</div>
       </div>
-      <div class="n" id="aNote">loading</div>
+      <div class="n" id="aNote" style="font-size:10.5px; line-height:1.4;">loading</div>
     </div>
   </section>
 
@@ -497,7 +642,7 @@ body.widget #wcard{display:flex}
 
   <footer class="foot rv">
     <button id="shareBtn" style="background:rgba(255,255,255,.92)">🔗 Share this weather</button>
-    <span id="updated">—</span><span id="coords"></span><span>Open-Meteo</span>
+    <span id="updated">—</span><span id="coords"></span><span>Developed by Deep Thakkar</span>
   </footer>
 </main>
 </div>
@@ -532,6 +677,10 @@ const WMO={0:['Clear sky','clear',0],1:['Mostly sunny','clear',0],2:['Partly clo
 85:['Snow showers','snow',1],86:['Heavy snow showers','snow',1.7],
 95:['Thunderstorm','thunder',1.3],96:['Storm with hail','thunder',1.7],99:['Severe storm','thunder',2.1]};
 const info=c=>WMO[c]||['—','cloud',0];
+// Night-aware condition label — replaces sun-centric WMO labels when it's dark
+const NIGHT_LABELS={0:'Clear night',1:'Mostly clear',2:'Partly cloudy',3:'Cloudy',
+  45:'Foggy',48:'Freezing fog'};
+const condLabel=(code,day)=>day?info(code)[0]:(NIGHT_LABELS[code]||info(code)[0]);
 const SNOWC=new Set([71,73,75,77,85,86]);
 const DEF={lat:55.6415,lon:12.0803,name:'Roskilde, DK'};
 const REFRESH=6e5,$=id=>document.getElementById(id);
@@ -649,7 +798,7 @@ async function load(){
   try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${S.lat}&longitude=${S.lon}&${Q}`);
     if(!r.ok)throw 0;S.wx=await r.json();S.last=Date.now();$('refresh').className='';
   }catch(e){$('refresh').className=S.wx?'stale':'err';}
-  try{const r=await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${S.lat}&longitude=${S.lon}&current=european_aqi,pm2_5&hourly=european_aqi,pm2_5&timezone=auto`);
+  try{const r=await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${S.lat}&longitude=${S.lon}&current=european_aqi,pm2_5,pm10&hourly=european_aqi,pm2_5,pm10&timezone=auto`);
     if(r.ok)S.air=await r.json();}catch(e){}
   if(S.wx)paint();
 }
@@ -659,7 +808,7 @@ const T=c=>c==null?0:Math.round(S.unit==='C'?c:c*9/5+32);
 const hm=s=>s.slice(11,16);
 const dirName=d=>['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'][Math.round(d/22.5)%16];
 const bft=v=>v<.5?'dead calm':v<3.4?'light breeze':v<8?'moderate':v<13.9?'fresh':v<20.8?'strong':v<28.5?'gale':'storm force';
-const AQ=[[20,'#2ECC8F','Good'],[40,'#9BD64A','Fair'],[60,'#FFB300','Moderate'],[80,'#FF7A45','Poor'],[100,'#FF4D6D','Very poor'],[1e9,'#B44DFF','Hazardous']];
+const AQ=[[20,'#2ECC8F','Good','😊'],[40,'#9BD64A','Fair','😐'],[60,'#FFB300','Moderate','☹️'],[80,'#FF7A45','Poor','😷'],[100,'#FF4D6D','Very poor','🤢'],[1e9,'#B44DFF','Hazardous','💀']];
 
 function countTo(el,to){
   const from=S.shown==null?to:S.shown;S.shown=to;
@@ -688,28 +837,43 @@ function rainStory(h,i,c){
   const runs=[];let s=-1;
   for(let k=0;k<N;k++){if(wet(k)){if(s<0)s=k;}else if(s>=0){runs.push([s,k-1]);s=-1;}}
   if(s>=0)runs.push([s,N-1]);
-  const word=k=>snowy(k)?'Snow':'Rain',at=k=>hm(h.time[i+k]);
-  const dur=(a,b)=>{const n=b-a+1;return n===1?'about an hour':n+' hours';};
-  const maxP=Math.max(...h.precipitation_probability.slice(i,i+N).map(v=>v||0));
-  let pk=0;for(let k=0;k<N;k++)if((h.precipitation_probability[i+k]||0)>(h.precipitation_probability[i+pk]||0))pk=k;
+  const isToday = k => h.time[i+k].slice(0,10) === c.time.slice(0,10);
+  const dayTag = k => isToday(k) ? 'today' : 'tomorrow';
+  const word = k => snowy(k) ? 'Snow' : 'Rain';
+  const at = k => `${hm(h.time[i+k])} ${dayTag(k)}`;
+  const dur = (a,b) => {const n=b-a+1;return n===1?'about an hour':n+' hours';};
+  const maxP = Math.max(...h.precipitation_probability.slice(i,i+N).map(v=>v||0));
+  let pk = 0;
+  for(let k=0;k<N;k++) if((h.precipitation_probability[i+k]||0)>(h.precipitation_probability[i+pk]||0)) pk=k;
+
   if(nowWet){
-    const first=runs.length&&runs[0][0]===0?runs[0]:null,stops=first?first[1]+1:1;
-    const next=runs.find(r=>r[0]>stops);
-    return [(SNOWC.has(c.weather_code)?'Snowing':'Raining')+' right now'
-      +(stops<N?` — easing off around ${at(stops)}`:', all day long'),
-      (peak?`Heaviest near ${at(peakK)} · `:'')+`${total.toFixed(1)} mm over 24 hours`
-      +(next?` · back again near ${at(next[0])}`:'')];
+    const first = runs.length && runs[0][0] === 0 ? runs[0] : null, stops = first ? first[1]+1 : 1;
+    const next = runs.find(r => r[0] > stops);
+    return [
+      (SNOWC.has(c.weather_code) ? 'Snowing' : 'Raining') + ' right now'
+      + (stops < N ? ` — easing off around ${at(stops)}` : ', all day long'),
+      (peak ? `Heaviest near ${at(peakK)} · ` : '') + `${total.toFixed(1)} mm over 24 hours`
+      + (next ? ` · back again near ${at(next[0])}` : '')
+    ];
   }
   if(runs.length){
-    const [a,b]=runs[0];
-    return [a===0?`${word(a)} starting within the hour, for ${dur(a,b)}`
-                 :`${word(a)} expected from ${at(a)}, for ${dur(a,b)}`,
-      `Heaviest around ${at(peakK)} · ${total.toFixed(1)} mm total · ${h.precipitation_probability[i+a]||maxP}% chance at ${at(a)}`
-      +(runs.length>1?` · another burst near ${at(runs[1][0])}`:'')];
+    const [a,b] = runs[0];
+    const main = a === 0
+      ? `${word(a)} starting within the hour, for ${dur(a,b)}`
+      : `${word(a)} expected ${dayTag(a)} from ${hm(h.time[i+a])}, for ${dur(a,b)}`;
+    const sub = `Heaviest around ${at(peakK)} · ${total.toFixed(1)} mm total · ${h.precipitation_probability[i+a]||maxP}% chance`
+      + (peakK !== a ? ` from ${at(a)}` : '')
+      + (runs.length > 1 ? ` · another burst near ${at(runs[1][0])}` : '');
+    return [main, sub];
   }
-  if(maxP>=25)return [`Maybe a shower around ${at(pk)}`,`${maxP}% at its highest — nothing steady in the forecast`];
-  return ['No rain for the next 24 hours 🎉',
-    maxP>0?`Wettest window is ${at(pk)} at just ${maxP}%`:'Completely dry all the way through'];
+  if(maxP >= 25) return [
+    `Maybe a shower ${dayTag(pk)} around ${hm(h.time[i+pk])}`,
+    `${maxP}% at its highest — nothing steady in the forecast`
+  ];
+  return [
+    'No rain for the next 24 hours 🎉',
+    maxP > 0 ? `Wettest window is ${dayTag(pk)} around ${hm(h.time[i+pk])} at just ${maxP}%` : 'Completely dry all the way through'
+  ];
 }
 
 /* ══════ paint ══════ */
@@ -717,11 +881,11 @@ function paint(){
   const d=S.wx,c=d.current,dy=d.daily,h=d.hourly,f=info(c.weather_code),day=c.is_day===1;
   countTo($('tVal'),T(c.temperature_2m));
   $('unitBtn').textContent='°'+S.unit;
-  $('cond').textContent=f[0];
+  $('cond').textContent=condLabel(c.weather_code,day);
   $('range').textContent=`H ${T(dy.temperature_2m_max[0])}°  ·  L ${T(dy.temperature_2m_min[0])}°`;
   $('bigIc').innerHTML=bigIcon(c.weather_code,day);
   $('mTemp').textContent=T(c.temperature_2m)+'°';
-  $('mCond').textContent=f[0];
+  $('mCond').textContent=condLabel(c.weather_code,day);
   $('mIcon').innerHTML=smallIcon(c.weather_code,day);
 
   let i=h.time.findIndex(t=>t.slice(0,13)===c.time.slice(0,13));if(i<0)i=0;
@@ -730,24 +894,6 @@ function paint(){
   $('coMain').textContent=main;$('coSub').textContent=sub;
   $('coIc').innerHTML=smallIcon(c.weather_code,day);
 
-  const tempC = c.apparent_temperature;
-  let wearTxt = "T-shirt and shorts";
-  let wearSub = "Perfect for warm weather";
-  let wearIc = "👕";
-  if (tempC < 5) { wearTxt = "Heavy winter coat"; wearSub = "Bundle up, it's freezing!"; wearIc = "🧥"; }
-  else if (tempC < 15) { wearTxt = "Light jacket or sweater"; wearSub = "A bit chilly outside"; wearIc = "🧥"; }
-  else if (tempC < 22) { wearTxt = "T-shirt and jeans"; wearSub = "Comfortable temperatures"; wearIc = "👕"; }
-  
-  const isRaining = c.precipitation > 0 || [61,63,65,66,67,80,81,82,95,96,99].includes(c.weather_code);
-  if (isRaining) wearSub += " • Don't forget an umbrella! ☔";
-  
-  const wM = $('wearMain');
-  if(wM) {
-    wM.textContent = wearTxt;
-    $('wearSub').textContent = wearSub;
-    $('wearIc').textContent = wearIc;
-  }
-
   $('wVal').innerHTML=Math.round(c.wind_speed_10m)+'<em>m/s</em>';
   $('needle').style.transform='rotate('+(c.wind_direction_10m||0)+'deg)';
   $('wNote').textContent='from '+dirName(c.wind_direction_10m)+' · '+bft(c.wind_speed_10m)
@@ -755,15 +901,33 @@ function paint(){
   const rh=Math.round(c.relative_humidity_2m);
   $('hVal').innerHTML=rh+'<em>%</em>';
   $('hNote').textContent=rh<35?'dry air':rh<60?'nice and comfy':rh<80?'a bit humid':'very humid';
+  const hArc = $('humArc');
+  if(hArc) hArc.setAttribute('stroke-dashoffset', (107 * (1 - rh/100)).toFixed(1));
+  
   $('fVal').innerHTML=T(c.apparent_temperature)+'<em>°</em>';
   const gap=c.apparent_temperature-c.temperature_2m;
   $('fNote').textContent=Math.abs(gap)<1?'same as the air':gap<0?Math.round(-gap)+'° colder than air':Math.round(gap)+'° warmer than air';
+  const tFill = $('tempFill');
+  if(tFill) {
+    const tRatio = Math.max(0, Math.min(1, (c.apparent_temperature + 10) / 50));
+    const h = tRatio * 22;
+    tFill.setAttribute('height', (h + 2).toFixed(1));
+    tFill.setAttribute('y', (28 - h).toFixed(1));
+  }
   const ac=S.air&&S.air.current;
   if(ac&&ac.european_aqi!=null){
     const v=Math.round(ac.european_aqi),b=AQ.find(x=>v<=x[0]);
-    $('aVal').textContent=v;$('aNote').textContent=b[2]+(ac.pm2_5!=null?' · PM2.5 '+ac.pm2_5.toFixed(1):'');
-    $('aqArc').setAttribute('stroke',b[1]);
-    $('aqArc').setAttribute('stroke-dashoffset',(80*(1-Math.min(v,120)/120)).toFixed(1));
+    $('aVal').textContent=v;
+    const pm25 = ac.pm2_5 != null ? 'PM2.5: '+ac.pm2_5.toFixed(1) : '';
+    const pm10 = ac.pm10 != null ? 'PM10: '+ac.pm10.toFixed(1) : '';
+    $('aNote').innerHTML=`<b>${b[2]}</b><br>${pm25} &nbsp; ${pm10}`;
+    const aBoy = $('aBoy');
+    if(aBoy) { 
+      aBoy.style.backgroundImage = '';
+      aBoy.textContent = b[3]; 
+    }
+    const aTile = $('aqiTile');
+    if(aTile) { aTile.style.background = b[1]; aTile.style.color = '#fff'; }
   }else{$('aVal').textContent='—';$('aNote').textContent='unavailable';}
 
   const mm=[],pp=[];
@@ -831,7 +995,7 @@ function paint(){
     $('wPlace').textContent=S.place||'Here';
     $('wTemp').textContent=T(c.temperature_2m);
     $('wUnit').textContent='°'+S.unit;
-    $('wCond').textContent=f[0];
+    $('wCond').textContent=condLabel(c.weather_code,day);
     $('wIcon').innerHTML=bigIcon(c.weather_code,day);
     $('wUp').textContent=new Date().toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
     $('wRain').textContent=main;
@@ -854,6 +1018,97 @@ function paint(){
     dir:c.wind_direction_10m||270,cloud:(c.cloud_cover??40)/100,day,elev:elev(now,rise,set)};
   applySky();seed();if(reduced)frame(0);
   reveal();
+  paintOutfit();
+}
+function paintOutfit(){
+  const d=S.wx; if(!d) return;
+  const c=d.current, h=d.hourly;
+  const temp=c.temperature_2m, code=c.weather_code, wind=c.wind_speed_10m||0, day=c.is_day===1;
+
+  // get max precipitation probability for next 6 hours
+  let i=h.time.findIndex(t=>t.slice(0,13)===c.time.slice(0,13)); if(i<0)i=0;
+  const maxRainProb=Math.max(...h.precipitation_probability.slice(i,i+6).map(v=>v||0));
+  const maxUV=Math.max(...(h.uv_index||[]).slice(i,i+6).map(v=>v||0));
+
+  const items=[];
+
+  // ——— RAIN / SNOW ———
+  const RAIN=[51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99];
+  const SNOW=[71,73,75,77,85,86];
+  const isRaining=RAIN.includes(code)||(c.precipitation||0)>=0.1;
+  const isSnowing=SNOW.includes(code);
+  const rainSoon=maxRainProb>=40;
+
+  if(isRaining||isSnowing){
+    items.push({e:'☂️', l:'Umbrella', cls:'pill-umbrella'});
+    items.push({e:'🧥', l:'Raincoat', cls:'pill-raincoat'});
+    if(isRaining) items.push({e:'👢', l:'Waterproof boots', cls:'pill-boots'});
+  } else if(rainSoon){
+    items.push({e:'☔', l:'Umbrella (just in case)', cls:'pill-umbrella'});
+  }
+
+  // ——— SNOW extras ———
+  if(isSnowing){
+    items.push({e:'🧬', l:'Gloves', cls:'pill-gloves'});
+    items.push({e:'🧣', l:'Scarf', cls:'pill-scarf'});
+  }
+
+  // ——— TEMPERATURE ———
+  const t=temp; // API always returns Celsius
+  if(t>=28){
+    items.push({e:'👕', l:'T-shirt', cls:'pill-tshirt'});
+    items.push({e:'🩳', l:'Shorts / Light clothing', cls:'pill-shorts'});
+  } else if(t>=20){
+    items.push({e:'👕', l:'Light top', cls:'pill-light'});
+  } else if(t>=12){
+    items.push({e:'🧭', l:'Light jacket', cls:'pill-jacket'});
+    items.push({e:'🧶', l:'Light layers', cls:'pill-layers'});
+  } else if(t>=5){
+    items.push({e:'🧭', l:'Warm jacket', cls:'pill-jacket'});
+    items.push({e:'🧬', l:'Gloves', cls:'pill-gloves'});
+    items.push({e:'🧣', l:'Scarf', cls:'pill-scarf'});
+  } else {
+    items.push({e:'🧭', l:'Heavy coat', cls:'pill-heavy'});
+    items.push({e:'🧬', l:'Gloves', cls:'pill-gloves'});
+    items.push({e:'🧣', l:'Scarf & hat', cls:'pill-scarf'});
+  }
+
+  // ——— SUN / UV ———
+  if(day && maxUV>=3){
+    items.push({e:'🕶', l:'Sunglasses', cls:'pill-sunglasses'});
+  }
+  if(day && maxUV>=6){
+    items.push({e:'🧴', l:'Sunscreen SPF 30+', cls:'pill-sunscreen'});
+  }
+  if(day && maxUV>=8){
+    items.push({e:'🧒', l:'Sun hat', cls:'pill-hat'});
+  }
+
+  // ——— WIND ———
+  if(wind>=8 && !isRaining){
+    items.push({e:'🧭', l:'Windbreaker', cls:'pill-windbreaker'});
+  }
+
+  // build pills
+  const container=$('outfitItems');
+  container.innerHTML='';
+  items.forEach((item,idx)=>{
+    const pill=document.createElement('span');
+    pill.className='outfit-pill '+item.cls;
+    pill.style.animationDelay=(idx*0.06)+'s';
+    pill.innerHTML=item.e+' '+item.l;
+    container.appendChild(pill);
+  });
+
+  // subtitle
+  const sub=$('outfitSub');
+  if(isSnowing) sub.textContent='Snow expected — bundle up!';
+  else if(isRaining) sub.textContent='Rain right now — stay dry!';
+  else if(rainSoon) sub.textContent=maxRainProb+'% chance of rain ahead';
+  else if(maxUV>=8) sub.textContent='UV very high — protect your skin';
+  else if(t>=28) sub.textContent='Hot out there — stay cool';
+  else if(t<=5) sub.textContent='Freezing — wrap up warm!';
+  else sub.textContent='Based on current & upcoming conditions';
 }
 function spline(p){
   if(p.length<2)return '';
@@ -1003,7 +1258,7 @@ function makeBolt(){
   for(let k=0;k<3;k++){by+=rnd(16,32);bx+=rnd(-36,36);br.push([bx,by]);}
   out.push(br);return out;
 }
-function loop(t){frame(t);requestAnimationFrame(loop);}
+function loop(t){/* disabled: replaced by CSS animations */}
 
 /* ══════ detail sheet: one metric across the day ══════ */
 const METRIC={
@@ -1021,8 +1276,8 @@ function seriesFor(k){
   const m=METRIC[k]; if(!m||!S.wx) return null;
   let times,vals,extra=null;
   if(m.air){
-    const a=S.air&&S.air.hourly; if(!a||!a.european_aqi) return null;
-    times=a.time; vals=a.european_aqi.slice();
+    const a=S.air&&S.air.hourly; if(!a||!a[m.key]) return null;
+    times=a.time; vals=a[m.key].slice();
   }else{
     const h=S.wx.hourly; if(!h[m.key]) return null;
     times=h.time; vals=h[m.key].slice();
@@ -1328,8 +1583,167 @@ async function boot(){
   geolocate();
 }
 applySky();resize();reveal();
-if(!reduced&&window.requestAnimationFrame)requestAnimationFrame(loop);else frame(0);
+// Canvas loop disabled — CSS animations replace it
+// if(!reduced&&window.requestAnimationFrame)requestAnimationFrame(loop);else frame(0);
 boot();
+
+function updateNewAnimations() {
+  const container = document.getElementById('weather-container');
+  if(!container) return;
+  container.innerHTML = '';
+  const kind = S.sc.kind;
+  const isDay = S.sc.day;
+  
+  if (kind === 'clear') {
+    if (!isDay) {
+        // No CSS moon — the app's hero SVG already shows the moon
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star-anim';
+            star.style.width = (Math.random() * 3 + 1) + 'px';
+            star.style.height = star.style.width;
+            star.style.left = (Math.random() * 100) + '%';
+            star.style.top = (Math.random() * 60) + '%';
+            star.style.animationDuration = (Math.random() * 3 + 1.5) + 's';
+            star.style.animationDelay = (Math.random() * 3) + 's';
+            container.appendChild(star);
+        }
+    }
+    // Sunny day: add very soft drifting gap-filler clouds for life
+    if (isDay) {
+      ['c6','c7','c8'].forEach(cls => {
+        const c = document.createElement('div');
+        c.className = 'cloud-anim ' + cls;
+        c.style.opacity = '0.45'; // subtle on clear days
+        container.appendChild(c);
+      });
+    }
+  } else if (kind === 'cloud') {
+    // All 8 cloud layers for max cloudiness
+    for(let i=1;i<=8;i++) {
+        const c = document.createElement('div');
+        c.className = 'cloud-anim c' + i;
+        container.appendChild(c);
+    }
+  } else if (kind === 'fog') {
+      for(let i=1;i<=8;i++) {
+          const c = document.createElement('div');
+          c.className = 'cloud-anim c' + i;
+          c.style.opacity = '0.3';
+          container.appendChild(c);
+      }
+  } else if (kind === 'rain' || kind === 'drizzle' || kind === 'thunder') {
+      // All 8 cloud layers, dark grey
+      for(let i=1;i<=8;i++) {
+          const c = document.createElement('div');
+          c.className = 'cloud-anim c' + i;
+          c.style.background = i <= 5 ? '#8ea1b0' : '#768796';
+          container.appendChild(c);
+      }
+      for (let i = 0; i < 40; i++) {
+          const drop = document.createElement('div');
+          drop.className = 'rain-drop';
+          drop.style.animationName = 'rainFall';
+          drop.style.left = (Math.random() * 100) + '%';
+          drop.style.animationDuration = (Math.random() * 0.4 + 0.4) + 's';
+          drop.style.animationDelay = (Math.random() * 1.5) + 's';
+          drop.style.opacity = Math.random() * 0.5 + 0.5;
+          container.appendChild(drop);
+      }
+  } else if (kind === 'snow') {
+      for(let i=1;i<=5;i++) {
+          const c = document.createElement('div');
+          c.className = 'cloud-anim c' + i;
+          c.style.background = '#d0dde8';
+          container.appendChild(c);
+      }
+      for (let i = 0; i < 60; i++) {
+          const drop = document.createElement('div');
+          drop.className = 'rain-drop';
+          drop.style.background = 'rgba(255,255,255,0.9)';
+          drop.style.width = (Math.random() * 4 + 3) + 'px';
+          drop.style.height = drop.style.width;
+          drop.style.borderRadius = '50%';
+          drop.style.animationName = 'rainFall';
+          drop.style.left = (Math.random() * 100) + '%';
+          drop.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          drop.style.animationDelay = (Math.random()) + 's';
+          drop.style.opacity = Math.random() * 0.5 + 0.5;
+          container.appendChild(drop);
+      }
+  }
+}
+const origApplySky = applySky;
+applySky = function() {
+    origApplySky();
+    updateNewAnimations();
+};
+
+/* ══════ PWA & Service Worker ══════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => {
+        reg.update();
+        console.log('[PWA] Service Worker registered:', reg.scope);
+      })
+      .catch(err => {
+        console.warn('[PWA] Service Worker registration failed:', err);
+      });
+  });
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      window.location.reload();
+    }
+  });
+}
+
+let deferredPrompt = null;
+
+function setupInstallButtons() {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const btn = $('installBtn');
+  if (!btn) return;
+  if (isStandalone) {
+    btn.style.display = 'none';
+    return;
+  }
+  btn.style.display = 'inline-flex';
+  btn.onclick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice && choice.outcome === 'accepted') {
+        btn.style.display = 'none';
+      }
+      deferredPrompt = null;
+    } else {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        alert("To install on iOS:\n1. Tap the Share button at the bottom of Safari (square with arrow)\n2. Select 'Add to Home Screen' 📲");
+      } else {
+        alert("To install this app:\nClick the Install icon (💻/📲) in your browser's address bar or open the browser menu (⋮) and select 'Install app' / 'Add to Home screen'.");
+      }
+    }
+  };
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  setupInstallButtons();
+});
+
+window.addEventListener('appinstalled', () => {
+  const btn = $('installBtn');
+  if (btn) btn.style.display = 'none';
+  deferredPrompt = null;
+});
+
+setupInstallButtons();
 </script>
+
 </body>
 </html>
