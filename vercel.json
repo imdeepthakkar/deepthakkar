@@ -138,6 +138,14 @@
       "dest": "api/proxy.js"
     },
     {
+      "src": "/indiatrip",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/indiatrip/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }

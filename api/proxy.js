@@ -47,6 +47,11 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
+  if (reqUrl === '/indiatrip') {
+    res.writeHead(308, { Location: '/indiatrip/' });
+    res.end();
+    return;
+  }
   // NOTE: /personal-calendar exact match is handled in the routing block below
 
   // Determine target host based on request URL prefix
@@ -82,6 +87,9 @@ module.exports = (req, res) => {
     targetHost = 'personal-calendar-sigma-jet.vercel.app';
     // Typo alias - rewrite to correct prefix
     cleanPath = reqUrl.replace('/personal-calander', '/personal-calendar');
+  } else if (reqUrl.startsWith('/indiatrip/')) {
+    targetHost = 'cph-india-tracker.vercel.app';
+    cleanPath = reqUrl.replace('/indiatrip', '');
   } else if (reqUrl === '/profile' || reqUrl.startsWith('/profile/')) {
     targetHost = 'deepthakkar-profile.vercel.app';
     cleanPath = reqUrl;
