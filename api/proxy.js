@@ -47,6 +47,11 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
+  if (reqUrl === '/weather') {
+    res.writeHead(308, { Location: '/weather/' });
+    res.end();
+    return;
+  }
   if (reqUrl === '/indiatrip') {
     res.writeHead(308, { Location: '/indiatrip/' });
     res.end();
@@ -87,6 +92,9 @@ module.exports = (req, res) => {
     targetHost = 'personal-calendar-sigma-jet.vercel.app';
     // Typo alias - rewrite to correct prefix
     cleanPath = reqUrl.replace('/personal-calander', '/personal-calendar');
+  } else if (reqUrl.startsWith('/weather/')) {
+    targetHost = 'weather-app-ui-pi.vercel.app';
+    cleanPath = reqUrl.replace('/weather', '');
   } else if (reqUrl.startsWith('/indiatrip/')) {
     targetHost = 'cph-india-tracker.vercel.app';
     cleanPath = reqUrl.replace('/indiatrip', '');

@@ -9,10 +9,6 @@
     {
       "src": "index.html",
       "use": "@vercel/static"
-    },
-    {
-      "src": "weather/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -98,12 +94,11 @@
     },
     {
       "src": "/weather",
-      "headers": { "Location": "/weather/" },
-      "status": 308
+      "dest": "api/proxy.js"
     },
     {
       "src": "/weather/(.*)",
-      "dest": "/weather/$1"
+      "dest": "api/proxy.js"
     },
     {
       "src": "/system-design",
