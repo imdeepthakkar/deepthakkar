@@ -42,6 +42,11 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
+  if (reqUrl === '/cph-live-tracker') {
+    res.writeHead(308, { Location: '/cph-live-tracker/' });
+    res.end();
+    return;
+  }
   if (reqUrl === '/system-design') {
     res.writeHead(308, { Location: '/system-design/' });
     res.end();
@@ -81,6 +86,9 @@ module.exports = (req, res) => {
   } else if (reqUrl.startsWith('/rejseplannen/')) {
     targetHost = 'rejseplannen.vercel.app';
     cleanPath = reqUrl.replace('/rejseplannen', '');
+  } else if (reqUrl.startsWith('/cph-live-tracker/')) {
+    targetHost = 'rejseplanen-live.vercel.app';
+    cleanPath = reqUrl.replace('/cph-live-tracker', '');
   } else if (reqUrl.startsWith('/system-design/')) {
     targetHost = 'system-design-learning-gold.vercel.app';
     cleanPath = reqUrl.replace('/system-design', '');
