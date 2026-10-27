@@ -31,8 +31,8 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
-  if (reqUrl === '/scrum-master') {
-    res.writeHead(308, { Location: '/scrum-master/' });
+  if (reqUrl === '/scrum-scenarios') {
+    res.writeHead(308, { Location: '/scrum-scenarios/' });
     res.end();
     return;
   }
@@ -57,11 +57,6 @@ module.exports = (req, res) => {
     res.end();
     return;
   }
-  if (reqUrl === '/indiatrip') {
-    res.writeHead(308, { Location: '/indiatrip/' });
-    res.end();
-    return;
-  }
   // NOTE: /personal-calendar exact match is handled in the routing block below
 
   // Determine target host based on request URL prefix
@@ -80,9 +75,9 @@ module.exports = (req, res) => {
   } else if (reqUrl.startsWith('/java-interview/')) {
     targetHost = 'java-coding-interview.vercel.app';
     cleanPath = reqUrl.replace('/java-interview', '');
-  } else if (reqUrl.startsWith('/scrum-master/')) {
+  } else if (reqUrl.startsWith('/scrum-scenarios/')) {
     targetHost = 'website-jade-seven-89.vercel.app';
-    cleanPath = reqUrl.replace('/scrum-master', '');
+    cleanPath = reqUrl.replace('/scrum-scenarios', '');
   } else if (reqUrl.startsWith('/rejseplannen/')) {
     targetHost = 'rejseplannen.vercel.app';
     cleanPath = reqUrl.replace('/rejseplannen', '');
@@ -103,9 +98,6 @@ module.exports = (req, res) => {
   } else if (reqUrl.startsWith('/weather/')) {
     targetHost = 'weather-app-ui-pi.vercel.app';
     cleanPath = reqUrl.replace('/weather', '');
-  } else if (reqUrl.startsWith('/indiatrip/')) {
-    targetHost = 'cph-india-tracker.vercel.app';
-    cleanPath = reqUrl.replace('/indiatrip', '');
   } else if (reqUrl === '/profile' || reqUrl.startsWith('/profile/')) {
     targetHost = 'deepthakkar-profile.vercel.app';
     cleanPath = reqUrl;

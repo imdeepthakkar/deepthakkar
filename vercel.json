@@ -9,6 +9,10 @@
     {
       "src": "index.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "scrum-master.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -86,11 +90,11 @@
     },
     {
       "src": "/scrum-master",
-      "dest": "api/proxy.js"
+      "dest": "/scrum-master.html"
     },
     {
-      "src": "/scrum-master/(.*)",
-      "dest": "api/proxy.js"
+      "src": "/scrum-master/",
+      "dest": "/scrum-master.html"
     },
     {
       "src": "/scrum-scenarios",
@@ -138,14 +142,6 @@
     },
     {
       "src": "/personal-calander/(.*)",
-      "dest": "api/proxy.js"
-    },
-    {
-      "src": "/indiatrip",
-      "dest": "api/proxy.js"
-    },
-    {
-      "src": "/indiatrip/(.*)",
       "dest": "api/proxy.js"
     },
     {

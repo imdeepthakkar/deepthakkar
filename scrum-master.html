@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>150+ Rapid-Fire Scrum Master Q&A</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Caveat:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #fdfaf0;
+            --blue-line: #a4b0be;
+            --red-pen: #e74c3c;
+            --ink: #2c3e50;
+            --highlight: #f1c40f;
+            --highlight-dark: #f39c12;
+            --margin: 60px;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                linear-gradient(transparent 95%, var(--blue-line) 95%);
+            background-size: 100% 32px;
+            line-height: 32px;
+            position: relative;
+        }
+
+        .margin-line {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: var(--margin);
+            width: 2px;
+            background-color: rgba(231, 76, 60, 0.4);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 32px 20px 48px calc(var(--margin) + 20px);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            padding: 6px 16px;
+            background-color: var(--highlight);
+            color: var(--ink);
+            border: 2px solid var(--ink);
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-link:hover {
+            background-color: var(--highlight-dark);
+            transform: translateY(-1px);
+        }
+
+        .progress-pill {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid var(--ink);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        h1, h2, h3 {
+            color: var(--highlight-dark);
+            margin-top: 24px;
+            margin-bottom: 0px;
+            line-height: 36px;
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+        }
+        h1 {
+            font-size: 2.6rem;
+            border-bottom: 2px dashed var(--highlight);
+            padding-bottom: 4px;
+            margin-top: 8px;
+        }
+        .subtitle {
+            margin: 0;
+            padding-top: 4px;
+            padding-bottom: 8px;
+            font-size: 1.05rem;
+            color: #576574;
+            font-style: italic;
+        }
+
+        p, li {
+            line-height: 32px;
+            margin: 0;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: 1.02rem;
+        }
+        ul { padding-left: 20px; margin: 0; }
+        strong { color: var(--red-pen); }
+
+        .category-header {
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+        .category-header h2 {
+            border-bottom: 1px solid rgba(44, 62, 80, 0.2);
+            padding-bottom: 4px;
+        }
+
+        .question-block {
+            padding: 16px 20px;
+            margin-bottom: 18px;
+            border: 2px dashed transparent;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+            position: relative;
+            background: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .question-block:hover {
+            border-color: var(--blue-line);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .question-block.done {
+            opacity: 0.6;
+            border-color: #2ecc71;
+            background-color: rgba(46, 204, 113, 0.08);
+        }
+        .mark-done-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: white;
+            border: 2px solid var(--ink);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            color: var(--ink);
+            transition: 0.2s;
+        }
+        .question-block.done .mark-done-btn {
+            background: #2ecc71;
+            color: white;
+            border-color: #2ecc71;
+        }
+
+        .tip-box {
+            margin-top: 8px;
+            padding: 6px 12px;
+            background: rgba(241, 196, 15, 0.15);
+            border-left: 3px solid var(--highlight-dark);
+            border-radius: 4px;
+            font-size: 0.92rem;
+            line-height: 26px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 36px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+        }
+        .page-btn {
+            padding: 8px 14px;
+            border: 2px solid var(--ink);
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .page-btn:hover { background: #f0f0f0; }
+        .page-btn.active {
+            background: var(--highlight);
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+            :root { --margin: 20px; }
+            .container { padding-left: 28px; }
+            .mark-done-btn { position: static; margin-bottom: 8px; display: inline-block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="margin-line"></div>
+    <div class="container" id="contentContainer">
+        <header>
+            <a href="/" class="back-link">⬅ Back to Portal</a>
+            <div class="progress-pill" id="progressPill">0 / 150 Completed</div>
+        </header>
+        <h1>150+ Rapid-Fire Scrum Master Q&A</h1>
+        <p class="subtitle">Quick-fire interview questions across Scrum Events, Artifacts, Accountabilities, Metrics &amp; Empiricism.</p>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('contentContainer');
+        const progressPill = document.getElementById('progressPill');
+
+        const q_templates = [
+          { q: "What is the primary purpose of the {topic}?", aKey: "purpose" },
+          { q: "Who is primarily responsible for the {topic}?", aKey: "owner" },
+          { q: "How long is the timebox for the {topic}?", aKey: "timebox" },
+          { q: "What are the mandatory inputs to the {topic}?", aKey: "inputs" },
+          { q: "What is the expected outcome of the {topic}?", aKey: "outcome" },
+          { q: "Can the {topic} be cancelled or modified? If so, by whom?", aKey: "cancel" },
+          { q: "How does the {topic} support empiricism (Transparency, Inspection, Adaptation)?", aKey: "tia" },
+          { q: "What happens to the team if the {topic} is skipped?", aKey: "skipped" },
+          { q: "Who must attend the {topic}?", aKey: "attend" },
+          { q: "What is a common anti-pattern seen during the {topic}?", aKey: "antipattern" }
+        ];
+
+        const eventData = {
+          "Sprint": {
+            purpose: "To serve as a container for all other events and work necessary to achieve the Product Goal.",
+            owner: "The entire Scrum Team collaboratively.",
+            timebox: "One month or less to maintain a consistent cadence and limit risk.",
+            inputs: "The previous Increment, team capacity, and past performance metrics.",
+            outcome: "A potentially releasable Increment of value that meets the Definition of Done.",
+            cancel: "It can be cancelled ONLY by the Product Owner, typically if the Sprint Goal becomes obsolete.",
+            tia: "It provides a regular, bounded cadence to inspect progress and adapt the Sprint Backlog.",
+            skipped: "It cannot be skipped; doing so breaks the Scrum framework and halts empirical value delivery.",
+            attend: "The entire Scrum Team.",
+            antipattern: "Extending the timebox to finish unfinished work instead of adapting."
+          },
+          "Sprint Planning": {
+            purpose: "To lay out the work to be performed for the Sprint collaboratively.",
+            owner: "The entire Scrum Team (PO proposes value, Devs select work).",
+            timebox: "A maximum of 8 hours for a one-month Sprint (proportionately shorter for shorter Sprints).",
+            inputs: "The Product Backlog, the latest Increment, projected team capacity, and historical velocity.",
+            outcome: "A defined Sprint Goal, selected Product Backlog items, and an actionable plan (the Sprint Backlog).",
+            cancel: "It cannot be cancelled, though it ends when the timebox expires.",
+            tia: "The team inspects the Product Backlog and adapts by creating a plan for the upcoming Sprint.",
+            skipped: "The team will lack a shared goal and plan, leading to chaotic execution and misalignment.",
+            attend: "The Scrum Team (subject matter experts can be invited for advice).",
+            antipattern: "The Product Owner assigning specific tasks to Developers instead of letting them pull work."
+          },
+          "Daily Scrum": {
+            purpose: "To inspect progress toward the Sprint Goal and adapt the Sprint Backlog as necessary.",
+            owner: "The Developers.",
+            timebox: "15 minutes, held at the same time and place every working day.",
+            inputs: "The current Sprint Backlog and progress since the last Daily Scrum.",
+            outcome: "An updated Sprint Backlog and an actionable plan for the next 24 hours.",
+            cancel: "It cannot be cancelled by anyone.",
+            tia: "Developers inspect daily progress and adapt their daily plan to increase the chances of meeting the Sprint Goal.",
+            skipped: "Impediments go unnoticed, collaboration drops, and the Sprint Goal is put at risk.",
+            attend: "The Developers (SM and PO only attend if they are executing Sprint tasks).",
+            antipattern: "Treating it as a status report to the Scrum Master or Product Owner."
+          },
+          "Sprint Review": {
+            purpose: "To inspect the outcome of the Sprint and determine future adaptations.",
+            owner: "The Scrum Team and invited stakeholders.",
+            timebox: "A maximum of 4 hours for a one-month Sprint.",
+            inputs: "The completed Increment and the current Product Backlog.",
+            outcome: "An updated Product Backlog and shared understanding with stakeholders on what to build next.",
+            cancel: "It cannot be cancelled; skipping it eliminates feedback loops.",
+            tia: "Stakeholders and the Scrum Team inspect the Increment and adapt the Product Backlog.",
+            skipped: "The team loses customer feedback and risks building the wrong product.",
+            attend: "The Scrum Team and key stakeholders invited by the Product Owner.",
+            antipattern: "Treating it as a formal sign-off or demo without interactive discussion."
+          },
+          "Sprint Retrospective": {
+            purpose: "To plan ways to increase quality and effectiveness across individuals, interactions, and tools.",
+            owner: "The entire Scrum Team.",
+            timebox: "A maximum of 3 hours for a one-month Sprint.",
+            inputs: "Observations from the Sprint, sprint metrics, DoD compliance, and team relations.",
+            outcome: "At least one actionable improvement item for the upcoming Sprint Backlog.",
+            cancel: "It should never be cancelled; continuous improvement is mandatory in Scrum.",
+            tia: "The Scrum Team inspects their process and adapts their ways of working.",
+            skipped: "The team repeats the same mistakes and suffers from low morale and stagnation.",
+            attend: "The entire Scrum Team (Developers, PO, and Scrum Master).",
+            antipattern: "Skipping follow-through on action items, turning it into a complaint session."
+          }
+        };
+
+        const artifactData = {
+          "Product Backlog": {
+            def: "An emergent, ordered list of what is needed to improve the product.",
+            owner: "The Product Owner.",
+            updated: "Continuously, as new information and market conditions emerge.",
+            commit: "The Product Goal.",
+            trans: "By being visible, transparent, and ordered clearly for everyone to see.",
+            change: "Yes, it is constantly changing as the environment and customer feedback evolve.",
+            add: "The Product Owner (or others with PO delegation, but the PO remains accountable).",
+            measure: "By inspecting the remaining work against the Product Goal over time.",
+            poor: "The team works on low-value tasks and the product loses strategic direction.",
+            value: "By ensuring the team always works on the most critical, high-ROI items first."
+          },
+          "Sprint Backlog": {
+            def: "The Sprint Goal, the set of selected PBIs, and an actionable plan for delivering the Increment.",
+            owner: "The Developers.",
+            updated: "Throughout the Sprint as more is learned during execution.",
+            commit: "The Sprint Goal.",
+            trans: "By providing a real-time picture of the work that Developers plan to accomplish.",
+            change: "Yes, the plan changes, but the Sprint Goal remains fixed.",
+            add: "Only the Developers can add items to their actionable plan during the Sprint.",
+            measure: "Through the Daily Scrum and tools like burndown or burnup charts.",
+            poor: "The team loses focus, fails to collaborate, and misses the Sprint Goal.",
+            value: "By keeping the Developers focused on a single achievable objective."
+          },
+          "Increment": {
+            def: "A concrete stepping stone toward the Product Goal. The sum of all PBIs completed.",
+            owner: "The Scrum Team (Developers create it, PO validates value).",
+            updated: "Whenever a Product Backlog item meets the Definition of Done.",
+            commit: "The Definition of Done.",
+            trans: "By being in a usable condition regardless of whether the PO decides to release it.",
+            change: "It grows additively as new items are completed.",
+            add: "Developers add to it by completing work that meets the Definition of Done.",
+            measure: "By validating if it satisfies the Definition of Done.",
+            poor: "Technical debt accumulates, and stakeholders cannot trust the state of the product.",
+            value: "By providing working software that can be inspected by users to validate assumptions."
+          },
+          "Definition of Done": {
+            def: "A formal description of the state of the Increment when it meets required quality measures.",
+            owner: "The Scrum Team (or the parent engineering organization).",
+            updated: "Typically during the Sprint Retrospective.",
+            commit: "It is the formal commitment for the Increment.",
+            trans: "By creating a shared understanding of what work was completed.",
+            change: "It can become more stringent over time, but must not be weakened during a Sprint.",
+            add: "The Scrum Team collaboratively adds criteria to improve quality.",
+            measure: "By checking every PBI against the DoD criteria before calling it complete.",
+            poor: "Work is marked 'done' but contains hidden bugs or requires heavy rework.",
+            value: "By guaranteeing that every Increment is actually usable and production-grade."
+          },
+          "Product Goal": {
+            def: "The long-term objective for the Scrum Team describing a future state of the product.",
+            owner: "The Product Owner.",
+            updated: "When the current Product Goal is either achieved or abandoned.",
+            commit: "It is the commitment for the Product Backlog.",
+            trans: "By giving clear context to why the Product Backlog items exist.",
+            change: "It generally remains fixed until achieved or abandoned.",
+            add: "The Product Owner defines it collaboratively with stakeholders.",
+            measure: "By evaluating the Increments against the target business outcome.",
+            poor: "The team acts as a feature factory without a coherent strategy.",
+            value: "By aligning all Sprint Goals toward a unified, strategic vision."
+          }
+        };
+
+        const roleData = {
+          "Scrum Master": {
+            acc: "Establishing Scrum as defined in the Guide and team effectiveness.",
+            stake: "By coaching them on empirical product planning and healthy Scrum interactions.",
+            daily: "They do not participate unless they are a Developer, but ensure it happens.",
+            retro: "They participate as a peer team member accountable for the Scrum process.",
+            trans: "By coaching the team on making artifacts visible, honest, and clear.",
+            anti: "Acting as a project manager, assigning tasks, or updating the Jira board for the team.",
+            conflict: "By facilitating open discussions and teaching the team conflict resolution techniques.",
+            backlog: "They have no authority over the content, but coach the PO on how to manage it.",
+            plan: "They ensure the event takes place, is effective, and is kept within the timebox.",
+            dod: "They coach the team to strictly adhere to it to ensure quality."
+          },
+          "Product Owner": {
+            acc: "Maximizing the value of the product and effectively managing the Product Backlog.",
+            stake: "They act as the primary liaison, capturing their needs and prioritizing them.",
+            daily: "They only participate if they are also executing Sprint tasks as a Developer.",
+            retro: "They collaborate on how to improve interactions and backlog refinement processes.",
+            trans: "By ensuring the Product Backlog is ordered, visible, and clearly understood.",
+            anti: "Writing overly detailed requirements without developer input, or overriding DoD.",
+            conflict: "By referring conflicts about scope back to the Product Goal and ROI.",
+            backlog: "They are the sole person accountable for its content and ordering.",
+            plan: "They propose how the product could increase its value and discuss the objective.",
+            dod: "They respect the Developers' DoD and only accept work that meets it."
+          },
+          "Developer": {
+            acc: "Creating a usable Increment each Sprint according to the Definition of Done.",
+            stake: "They collaborate with them during the Sprint Review or when invited by the PO.",
+            daily: "They inspect progress toward the Sprint Goal and adapt their plan for the next 24 hours.",
+            retro: "They actively propose process, tool, and engineering interaction improvements.",
+            trans: "By keeping the Sprint Backlog updated and adhering strictly to the DoD.",
+            anti: "Working in silos, ignoring the DoD, or waiting for tasks to be assigned to them.",
+            conflict: "By addressing it directly with peers using Scrum values (Respect, Openness).",
+            backlog: "They have no authority over order, but provide sizing and estimates for items.",
+            plan: "They select items from the Product Backlog and create an actionable plan to deliver them.",
+            dod: "They define it (if not standardized by the org) and commit to never compromising it."
+          },
+          "Scrum Team": {
+            acc: "Delivering a valuable, useful Increment every Sprint.",
+            stake: "By engaging them during the Sprint Review to gather empirical feedback.",
+            daily: "The Developers within the team hold the Daily Scrum.",
+            retro: "The entire team inspects themselves and adapts their processes.",
+            trans: "By ensuring all three artifacts are visible and commitments are understood.",
+            anti: "Creating internal hierarchies or sub-teams (e.g., 'QA team' vs 'Dev team').",
+            conflict: "By leveraging the 5 Scrum Values to build trust and psychological safety.",
+            backlog: "The team collaboratively refines it, though the PO owns the order.",
+            plan: "They collaboratively craft the Sprint Goal.",
+            dod: "They collectively ensure the Increment meets the required quality."
+          }
+        };
+
+        const metricData = {
+          "Velocity": {
+            measure: "The amount of work (usually in Story Points) a team successfully completes during a Sprint.",
+            user: "The Product Owner (for release forecasting) and Developers (for capacity planning).",
+            sig: "It provides a historical, empirical baseline to help the team predict how much work they can realistically pull into the next Sprint.",
+            anti: "Comparing velocity across different teams or demanding that it constantly increase. Velocity is a capacity aid, not a KPI.",
+            adapt: "By analyzing sudden changes in velocity, the team can identify hidden bottlenecks, context switching, or technical debt."
+          },
+          "Sprint Burndown": {
+            measure: "The amount of remaining work in the current Sprint over time.",
+            user: "The Developers, who inspect it during the Daily Scrum.",
+            sig: "It makes progress toward the Sprint Goal highly transparent daily, highlighting scope creep or blockages early.",
+            anti: "Management using it as a micro-management tool to interrogate developers for not drawing a straight line.",
+            adapt: "If the burndown line trends above the ideal path, Developers adapt their plan or renegotiate scope with the PO."
+          },
+          "Escaped Defects": {
+            measure: "The number of defects found by users in production after an Increment has been released.",
+            user: "The entire Scrum Team.",
+            sig: "It is a direct indicator of product quality and the effectiveness of the team's Definition of Done.",
+            anti: "Ignoring the metric entirely while celebrating high velocity. Velocity without quality is waste.",
+            adapt: "A spike in defects should prompt the team to strengthen their Definition of Done and invest in automated tests."
+          },
+          "Cycle Time": {
+            measure: "The total elapsed time from when work begins on a task until it meets the Definition of Done.",
+            user: "The Scrum Team, particularly Developers and Scrum Master.",
+            sig: "Lower cycle times lead to faster feedback loops and greater delivery predictability.",
+            anti: "Rewarding individual fast cycle times at the expense of overall team collaboration and code reviews.",
+            adapt: "If cycle time rises, the team inspects their review process, CI/CD pipeline, and task sizing in the Retrospective."
+          },
+          "Work in Progress (WIP)": {
+            measure: "The number of items the team is actively working on at any given moment.",
+            user: "The Developers and Scrum Master.",
+            sig: "Limiting WIP reduces context-switching, exposes bottlenecks, and speeds up throughput (Little's Law).",
+            anti: "Allowing team members to start new items while existing items are stuck waiting on code review or testing.",
+            adapt: "The team implements WIP limits on their board to encourage swarming and finish work before starting new work."
+          }
+        };
+
+        function elaborateAnswer(topic, key, short) {
+            let tip = "";
+            if (key === 'purpose' || key === 'def' || key === 'acc') {
+                tip = "Always emphasize how this directly enables the 3 Pillars of Scrum (Transparency, Inspection, Adaptation).";
+            } else if (key === 'owner' || key === 'stake') {
+                tip = "A common interview trap is assuming a 'manager' role. Always emphasize servant-leadership and team self-management.";
+            } else if (key === 'timebox' || key === 'updated' || key === 'daily') {
+                tip = "If asked 'what if we need more time?', your answer is always to reduce scope, never to extend the timebox.";
+            } else if (key === 'inputs' || key === 'commit' || key === 'trans' || key === 'retro') {
+                tip = "Mention that missing or poorly defined inputs lead directly to failed commitments and technical debt.";
+            } else if (key === 'outcome' || key === 'measure' || key === 'plan') {
+                tip = "Interviewers love when you connect daily activities directly back to value delivery and the Product Goal.";
+            } else if (key === 'cancel' || key === 'change' || key === 'conflict') {
+                tip = "Show that you understand the balance between Agility (flexibility) and Scrum framework discipline.";
+            } else if (key === 'tia' || key === 'value' || key === 'dod') {
+                tip = "Use the terms 'Inspect and Adapt' and 'empirical process control'; it's the core engine of Scrum.";
+            } else if (key === 'skipped' || key === 'poor' || key === 'anti') {
+                tip = "Never say 'we can skip it if we are busy'. Busy teams need Scrum events the most.";
+            } else if (key === 'antipattern') {
+                tip = "When identifying an anti-pattern, always follow up with how you would coach the team to resolve it.";
+            } else {
+                tip = "Connect metrics and practices back to the 5 Scrum Values: Focus, Openness, Respect, Courage, Commitment.";
+            }
+            return short + `<div class="tip-box"><strong>💡 Interview Tip:</strong> ${tip}</div>`;
+        }
+
+        const realQuestions = [];
+
+        // 1. Scrum Events (50 questions)
+        Object.keys(eventData).forEach(topic => {
+            q_templates.forEach(t => {
+                realQuestions.push({
+                    cat: "Scrum Events",
+                    q: t.q.replace('{topic}', topic),
+                    a: elaborateAnswer(topic, t.aKey, eventData[topic][t.aKey])
+                });
+            });
+        });
+
+        // 2. Scrum Artifacts & Commitments (50 questions)
+        const a_templates = [
+          { q: "What is the official definition of '{topic}' in Scrum?", aKey: "def" },
+          { q: "Who is responsible for the '{topic}'?", aKey: "owner" },
+          { q: "When and how often is the '{topic}' updated?", aKey: "updated" },
+          { q: "What is the mandatory commitment associated with the '{topic}'?", aKey: "commit" },
+          { q: "How does the '{topic}' support transparency across the team?", aKey: "trans" },
+          { q: "Can the '{topic}' change during a Sprint? Under what conditions?", aKey: "change" },
+          { q: "Who can add or remove items from the '{topic}'?", aKey: "add" },
+          { q: "How is progress measured against the '{topic}'?", aKey: "measure" },
+          { q: "What is the delivery consequence if the '{topic}' is managed poorly?", aKey: "poor" },
+          { q: "How does the '{topic}' maximize value delivery for customers?", aKey: "value" }
+        ];
+
+        Object.keys(artifactData).forEach(topic => {
+            a_templates.forEach(t => {
+                realQuestions.push({
+                    cat: "Scrum Artifacts & Commitments",
+                    q: t.q.replace('{topic}', topic),
+                    a: elaborateAnswer(topic, t.aKey, artifactData[topic][t.aKey])
+                });
+            });
+        });
+
+        // 3. Scrum Accountabilities & Roles (40 questions)
+        const r_templates = [
+          { q: "What are the primary accountabilities of the {role}?", aKey: "acc" },
+          { q: "How does the {role} interact with external stakeholders?", aKey: "stake" },
+          { q: "What should the {role} do during the Daily Scrum?", aKey: "daily" },
+          { q: "What is the {role}'s main responsibility during the Retrospective?", aKey: "retro" },
+          { q: "How does the {role} ensure transparency across the team?", aKey: "trans" },
+          { q: "What is a common anti-pattern for a person in the {role}?", aKey: "anti" },
+          { q: "How does the {role} handle or navigate team conflicts?", aKey: "conflict" },
+          { q: "What authority does the {role} have over the backlog?", aKey: "backlog" },
+          { q: "How does the {role} contribute to Sprint Planning?", aKey: "plan" },
+          { q: "How does the {role} uphold the Definition of Done?", aKey: "dod" }
+        ];
+
+        Object.keys(roleData).forEach(role => {
+            r_templates.forEach(t => {
+                realQuestions.push({
+                    cat: "Accountabilities & Team Dynamics",
+                    q: t.q.replace('{role}', role),
+                    a: elaborateAnswer(role, t.aKey, roleData[role][t.aKey])
+                });
+            });
+        });
+
+        // 4. Agile Metrics & Empiricism (25 questions)
+        const m_templates = [
+          { q: "What does the '{metric}' metric measure in Scrum?", aKey: "measure" },
+          { q: "Who is the primary user and beneficiary of '{metric}'?", aKey: "user" },
+          { q: "Why is tracking '{metric}' significant for team health?", aKey: "sig" },
+          { q: "What is a common management anti-pattern regarding '{metric}'?", aKey: "anti" },
+          { q: "How does '{metric}' help the Scrum Team inspect and adapt?", aKey: "adapt" }
+        ];
+
+        Object.keys(metricData).forEach(metric => {
+            m_templates.forEach(t => {
+                realQuestions.push({
+                    cat: "Metrics & Flow",
+                    q: t.q.replace('{metric}', metric),
+                    a: elaborateAnswer(metric, t.aKey, metricData[metric][t.aKey])
+                });
+            });
+        });
+
+        const allBlocks = [];
+        let lastCategory = '';
+
+        realQuestions.forEach((item, index) => {
+            const qNum = index + 1;
+            
+            if (item.cat !== lastCategory) {
+                lastCategory = item.cat;
+                const catDiv = document.createElement('div');
+                catDiv.className = 'category-header';
+                catDiv.innerHTML = `<h2>${lastCategory}</h2>`;
+                allBlocks.push(catDiv);
+            }
+
+            const qBlock = document.createElement('div');
+            qBlock.className = 'question-block';
+            
+            const btn = document.createElement('button');
+            btn.className = 'mark-done-btn';
+            btn.textContent = 'Mark as Done';
+            
+            const qId = 'scrum_rapid_fire_' + qNum;
+            if (localStorage.getItem(qId) === 'true') {
+                qBlock.classList.add('done');
+                btn.textContent = '✓ Done';
+            }
+            
+            btn.onclick = () => {
+                const isDone = qBlock.classList.toggle('done');
+                localStorage.setItem(qId, isDone);
+                btn.textContent = isDone ? '✓ Done' : 'Mark as Done';
+                updateProgress();
+            };
+
+            qBlock.innerHTML = `
+                <p><strong>Q${qNum}: ${item.q}</strong></p>
+                <ul>
+                    <li>${item.a}</li>
+                </ul>
+            `;
+            qBlock.insertBefore(btn, qBlock.firstChild);
+            allBlocks.push(qBlock);
+        });
+
+        function updateProgress() {
+            let done = 0;
+            for (let i = 1; i <= realQuestions.length; i++) {
+                if (localStorage.getItem('scrum_rapid_fire_' + i) === 'true') done++;
+            }
+            if (progressPill) {
+                progressPill.textContent = `${done} / ${realQuestions.length} Completed`;
+            }
+        }
+        updateProgress();
+
+        const QUESTIONS_PER_PAGE = 15;
+        const totalQuestionBlocks = realQuestions.length;
+        const totalPages = Math.ceil(totalQuestionBlocks / QUESTIONS_PER_PAGE);
+
+        const paginationDiv = document.createElement('div');
+        paginationDiv.className = 'pagination';
+        
+        function renderPage(page) {
+            allBlocks.forEach(b => {
+                if (b.parentNode) b.parentNode.removeChild(b);
+            });
+            if (paginationDiv.parentNode) paginationDiv.parentNode.removeChild(paginationDiv);
+            
+            paginationDiv.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'page-btn' + (i === page ? ' active' : '');
+                btn.textContent = i;
+                btn.onclick = () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    renderPage(i);
+                };
+                paginationDiv.appendChild(btn);
+            }
+            
+            let qCount = 0;
+            let currentCatDiv = null;
+            let catShownOnThisPage = false;
+
+            allBlocks.forEach(block => {
+                if (block.classList.contains('category-header')) {
+                    currentCatDiv = block;
+                    catShownOnThisPage = false;
+                } else if (block.classList.contains('question-block')) {
+                    if (qCount >= (page - 1) * QUESTIONS_PER_PAGE && qCount < page * QUESTIONS_PER_PAGE) {
+                        if (currentCatDiv && !catShownOnThisPage) {
+                            container.appendChild(currentCatDiv);
+                            catShownOnThisPage = true;
+                        }
+                        container.appendChild(block);
+                    }
+                    qCount++;
+                }
+            });
+            container.appendChild(paginationDiv);
+        }
+
+        renderPage(1);
+    });
+    </script>
+</body>
+</html>
