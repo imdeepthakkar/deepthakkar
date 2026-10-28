@@ -65,6 +65,14 @@
       "dest": "api/proxy.js"
     },
     {
+      "src": "/indiatrip",
+      "dest": "api/proxy.js"
+    },
+    {
+      "src": "/indiatrip/(.*)",
+      "dest": "api/proxy.js"
+    },
+    {
       "src": "/rejseplannen",
       "dest": "api/proxy.js"
     },

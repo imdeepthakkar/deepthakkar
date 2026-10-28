@@ -37,6 +37,11 @@ module.exports = (req, res) => {
     return;
   }
 
+  if (reqUrl === '/indiatrip') {
+    res.writeHead(308, { Location: '/indiatrip/' });
+    res.end();
+    return;
+  }
   if (reqUrl === '/rejseplannen') {
     res.writeHead(308, { Location: '/rejseplannen/' });
     res.end();
@@ -78,6 +83,9 @@ module.exports = (req, res) => {
   } else if (reqUrl.startsWith('/scrum-scenarios/')) {
     targetHost = 'website-jade-seven-89.vercel.app';
     cleanPath = reqUrl.replace('/scrum-scenarios', '');
+  } else if (reqUrl.startsWith('/indiatrip/')) {
+    targetHost = 'cph-india-tracker.vercel.app';
+    cleanPath = reqUrl.replace('/indiatrip', '');
   } else if (reqUrl.startsWith('/rejseplannen/')) {
     targetHost = 'rejseplannen.vercel.app';
     cleanPath = reqUrl.replace('/rejseplannen', '');
