@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #090d16;
-            --card-bg: rgba(18, 24, 38, 0.95);
+            --bg: #070a12;
+            --card-bg: rgba(15, 20, 32, 0.95);
             --border: rgba(255, 255, 255, 0.1);
             --text: #f0f6fc;
             --text-secondary: #8b949e;
@@ -36,7 +36,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
         }
 
         .portal-card {
@@ -45,25 +45,31 @@
             -webkit-backdrop-filter: blur(24px);
             border-radius: 14px;
             width: 100%;
-            max-width: 860px;
-            height: calc(100vh - 40px);
-            max-height: 820px;
+            max-width: 960px;
+            height: calc(100vh - 32px);
+            max-height: 860px;
             display: flex;
             flex-direction: column;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             overflow: hidden;
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98) translateY(8px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        .portal-card.fullscreen {
+            max-width: 100vw;
+            max-height: 100vh;
+            height: 100vh;
+            border-radius: 0;
+            border: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9999;
         }
 
         .mac-header {
             background: rgba(13, 17, 23, 0.98);
-            height: 44px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -80,6 +86,7 @@
 
         .mac-btn {
             width: 12px; height: 12px; border-radius: 50%;
+            cursor: pointer;
         }
         .close { background-color: #ff5f56; border: 1px solid #e0443e; }
         .minimize { background-color: #ffbd2e; border: 1px solid #dea123; }
@@ -116,20 +123,11 @@
         }
         .header-link:hover { color: #ffffff; }
 
-        .workspace-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: var(--terminal-bg);
-            position: relative;
-            overflow: hidden;
-        }
-
         /* Top Action Bar */
         .action-bar {
             background: rgba(22, 27, 34, 0.7);
             border-bottom: 1px solid var(--border);
-            padding: 10px 20px;
+            padding: 10px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -138,158 +136,179 @@
             flex-shrink: 0;
         }
 
-        .status-pill {
+        .host-input-group {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
+            flex: 1;
+            max-width: 480px;
+        }
+
+        .host-input {
+            background: rgba(3, 7, 18, 0.8);
+            border: 1px solid var(--border);
+            color: #ffffff;
             font-family: 'Fira Code', monospace;
-            color: #58a6ff;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            flex: 1;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .host-input:focus {
+            border-color: var(--accent);
+        }
+
+        .connect-btn {
+            background: var(--accent);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: var(--accent-hover);
         }
 
         .btn-group {
             display: flex;
+            align-items: center;
             gap: 10px;
         }
 
         .action-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: var(--accent);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: all 0.2s;
-            box-shadow: 0 2px 8px rgba(47, 129, 247, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .action-btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .action-btn-secondary {
+            gap: 6px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid var(--border);
             color: var(--text);
-            box-shadow: none;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
         }
-        .action-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.14);
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
             color: #ffffff;
         }
 
-        /* Terminal Mock View & Commands */
-        .terminal-viewport {
+        /* Terminal Viewport Area */
+        .terminal-container {
             flex: 1;
-            padding: 24px;
-            font-family: 'Fira Code', monospace;
-            font-size: 13px;
-            color: #c9d1d9;
-            overflow-y: auto;
-            line-height: 1.6;
-        }
-
-        .prompt-line {
-            color: #8b949e;
-            margin-bottom: 8px;
-        }
-        .prompt-user { color: #58a6ff; font-weight: 600; }
-        .prompt-cmd { color: #7ee787; font-weight: 500; }
-
-        .banner-box {
-            background: rgba(47, 129, 247, 0.08);
-            border: 1px solid rgba(47, 129, 247, 0.25);
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin: 16px 0 24px;
-        }
-
-        .banner-title {
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 6px;
+            background: var(--terminal-bg);
+            position: relative;
             display: flex;
-            align-items: center;
-            gap: 8px;
+            flex-direction: column;
         }
 
-        .banner-desc {
-            color: #8b949e;
-            font-size: 12px;
-        }
-
-        .cmd-table {
+        .terminal-frame {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 12px;
+            height: 100%;
+            border: none;
+            background: var(--terminal-bg);
         }
 
-        .cmd-table th {
-            text-align: left;
-            padding: 8px 12px;
-            color: #8b949e;
-            border-bottom: 1px solid var(--border);
+        /* Empty/Disconnected State */
+        .empty-state {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+            background: var(--terminal-bg);
+            z-index: 2;
         }
 
-        .cmd-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        .empty-icon {
+            font-size: 48px;
+            color: #58a6ff;
+            margin-bottom: 20px;
         }
 
-        .cmd-name {
-            color: #7ee787;
-            font-weight: 600;
+        .empty-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
         }
 
-        .cmd-detail {
-            color: #8b949e;
-        }
-
-        /* Embedded Frame Fallback Notice */
-        .security-notice {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px dashed var(--border);
-            border-radius: 8px;
-            padding: 14px 18px;
-            font-size: 12px;
+        .empty-desc {
+            font-size: 14px;
             color: var(--text-secondary);
-            margin-top: 20px;
+            max-width: 520px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .setup-steps {
+            background: rgba(22, 27, 34, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            max-width: 520px;
+            width: 100%;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .setup-step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .setup-step:last-child { margin-bottom: 0; }
+        .step-num {
+            background: rgba(47, 129, 247, 0.2);
+            color: #58a6ff;
+            width: 22px; height: 22px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
         }
 
-        .security-notice i { color: #d29922; font-size: 18px; }
-
-        @media (max-width: 600px) {
-            .portal-card { height: 100vh; border-radius: 0; }
-            .action-bar { flex-direction: column; align-items: stretch; }
-            .btn-group { flex-direction: column; }
+        .step-text a {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: 500;
         }
+        .step-text a:hover { text-decoration: underline; }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div class="portal-card">
+    <div class="portal-card" id="portalCard">
         <!-- macOS Window Header -->
         <div class="mac-header">
             <div class="mac-controls">
-                <div class="mac-btn close"></div>
-                <div class="mac-btn minimize"></div>
-                <div class="mac-btn maximize"></div>
+                <div class="mac-btn close" title="Close" onclick="window.location.href='/'"></div>
+                <div class="mac-btn minimize" title="Minimize"></div>
+                <div class="mac-btn maximize" id="maximizeBtn" title="Toggle Fullscreen"></div>
             </div>
             <div class="header-title">
-                <span class="pulse-dot"></span>
-                <span>deepthakkar.vercel.app/agy — bash — agy 1.4.9</span>
+                <span class="pulse-dot" id="statusDot"></span>
+                <span id="headerStatus">deepthakkar.vercel.app/agy — Live Terminal</span>
             </div>
             <div class="header-actions">
                 <a href="/" class="header-link" title="Return to Portal"><i class="fa-solid fa-house"></i></a>
@@ -298,83 +317,132 @@
 
         <!-- Top Action Bar -->
         <div class="action-bar">
-            <div class="status-pill">
-                <i class="fa-solid fa-cloud"></i>
-                <span>Codespaces: imdeepthakkar/ai-job-search</span>
+            <div class="host-input-group">
+                <input type="text" id="backendUrlInput" class="host-input" placeholder="Enter Railway / Render URL (e.g. https://agy.up.railway.app)">
+                <button class="connect-btn" id="connectBtn">Connect</button>
             </div>
             <div class="btn-group">
-                <a href="https://drive.google.com/drive/folders/1rVMIUmEclDSFeitXv03QNUbwZMEoY_Q4" target="_blank" class="action-btn action-btn-secondary">
+                <a href="https://drive.google.com/drive/folders/1rVMIUmEclDSFeitXv03QNUbwZMEoY_Q4" target="_blank" class="action-btn">
                     <i class="fa-solid fa-folder"></i>
-                    <span>Google Drive</span>
+                    <span>Drive</span>
                 </a>
-                <a href="https://codespaces.new/imdeepthakkar/ai-job-search" target="_blank" class="action-btn" id="openTerminalBtn">
-                    <i class="fa-solid fa-rocket"></i>
-                    <span>Launch Cloud Terminal</span>
+                <a href="https://codespaces.new/imdeepthakkar/ai-job-search" target="_blank" class="action-btn" title="Launch via Codespaces fallback">
+                    <i class="fa-solid fa-cloud"></i>
+                    <span>Codespace</span>
                 </a>
+                <button class="action-btn" id="fullscreenBtn" title="Expand Fullscreen">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
             </div>
         </div>
 
-        <!-- Terminal Viewport -->
-        <div class="workspace-area">
-            <div class="terminal-viewport">
-                <div class="prompt-line">
-                    <span class="prompt-user">deept@cloud:~/ai-job-search$</span> <span class="prompt-cmd">agy --version</span>
-                </div>
-                <div>Antigravity CLI (agy) v1.4.9 [Linux x86_64]</div>
-
-                <div class="banner-box">
-                    <div class="banner-title">
-                        <i class="fa-solid fa-circle-check" style="color: #238636;"></i>
-                        <span>Environment Configured & Ready</span>
-                    </div>
-                    <div class="banner-desc">
-                        Full LaTeX engine (XeTeX, LuaTeX), 6 portal CLIs, and automated Google Drive document sync are configured.
-                    </div>
+        <!-- Terminal Viewport Area -->
+        <div class="terminal-container">
+            <!-- Disconnected / Setup State -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon"><i class="fa-solid fa-terminal"></i></div>
+                <div class="empty-title">AGY 24/7 Cloud Terminal</div>
+                <div class="empty-desc">
+                    Connect your persistent backend container to embed the real interactive terminal directly inside this window.
                 </div>
 
-                <div class="prompt-line">
-                    <span class="prompt-user">deept@cloud:~/ai-job-search$</span> <span class="prompt-cmd">cat workflow_cheatsheet.md</span>
-                </div>
-
-                <table class="cmd-table">
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="cmd-name">/apply &lt;job_posting_url&gt;</td>
-                            <td class="cmd-detail">Evaluates fit, tailors CV & Cover Letter, compiles PDFs, uploads to Google Drive.</td>
-                        </tr>
-                        <tr>
-                            <td class="cmd-name">/scrape</td>
-                            <td class="cmd-detail">Fetches matching positions across LinkedIn, Jobindex, Jobnet, Jobbank, Freehire.</td>
-                        </tr>
-                        <tr>
-                            <td class="cmd-name">/rank</td>
-                            <td class="cmd-detail">Batch-scores scraped jobs against your candidate profile.</td>
-                        </tr>
-                        <tr>
-                            <td class="cmd-name">/interview</td>
-                            <td class="cmd-detail">Generates stage-specific company research & STAR interview prep.</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="security-notice">
-                    <div style="display:flex; align-items:center; gap: 12px;">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>Protected by GitHub Authentication. Click "Launch Cloud Terminal" to start your session in 1 click.</span>
+                <div class="setup-steps">
+                    <div class="setup-step">
+                        <div class="step-num">1</div>
+                        <div class="step-text">
+                            Deploy your container to <a href="https://railway.app/new" target="_blank">Railway.app</a> or <a href="https://render.com" target="_blank">Render</a> from <strong>imdeepthakkar/ai-job-search</strong> (it uses our new Dockerfile).
+                        </div>
                     </div>
-                    <a href="https://codespaces.new/imdeepthakkar/ai-job-search" target="_blank" class="action-btn" style="padding: 6px 12px; font-size: 12px;">
-                        Open ↗
-                    </a>
+                    <div class="setup-step">
+                        <div class="step-num">2</div>
+                        <div class="step-text">
+                            Add environment variables in Railway/Render: <code>GDRIVE_WEBHOOK_URL</code> & <code>GDRIVE_FOLDER_ID</code>.
+                        </div>
+                    </div>
+                    <div class="setup-step">
+                        <div class="step-num">3</div>
+                        <div class="step-text">
+                            Paste the generated HTTPS URL above and click <strong>Connect</strong>!
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Active Live Terminal Frame -->
+            <iframe id="terminalFrame" class="terminal-frame hidden" allow="clipboard-read; clipboard-write"></iframe>
         </div>
     </div>
 
+    <script>
+        const STORAGE_KEY = "agy_terminal_backend_url";
+        const input = document.getElementById("backendUrlInput");
+        const connectBtn = document.getElementById("connectBtn");
+        const emptyState = document.getElementById("emptyState");
+        const terminalFrame = document.getElementById("terminalFrame");
+        const headerStatus = document.getElementById("headerStatus");
+        const statusDot = document.getElementById("statusDot");
+        const portalCard = document.getElementById("portalCard");
+        const fullscreenBtn = document.getElementById("fullscreenBtn");
+        const maximizeBtn = document.getElementById("maximizeBtn");
+
+        function loadBackend(url) {
+            if (!url) {
+                emptyState.classList.remove("hidden");
+                terminalFrame.classList.add("hidden");
+                terminalFrame.src = "";
+                headerStatus.textContent = "deepthakkar.vercel.app/agy — Offline";
+                statusDot.style.backgroundColor = "#8b949e";
+                statusDot.style.boxShadow = "none";
+                return;
+            }
+
+            // Save to localStorage
+            localStorage.setItem(STORAGE_KEY, url);
+            input.value = url;
+
+            // Load iframe
+            terminalFrame.src = url;
+            terminalFrame.classList.remove("hidden");
+            emptyState.classList.add("hidden");
+
+            headerStatus.textContent = "deepthakkar.vercel.app/agy — Connected";
+            statusDot.style.backgroundColor = "#238636";
+            statusDot.style.boxShadow = "0 0 8px #238636";
+        }
+
+        connectBtn.addEventListener("click", () => {
+            let url = input.value.trim();
+            if (url && !url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url;
+            }
+            loadBackend(url);
+        });
+
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                connectBtn.click();
+            }
+        });
+
+        // Toggle Fullscreen
+        function toggleFullscreen() {
+            portalCard.classList.toggle("fullscreen");
+            const icon = fullscreenBtn.querySelector("i");
+            if (portalCard.classList.contains("fullscreen")) {
+                icon.className = "fa-solid fa-compress";
+            } else {
+                icon.className = "fa-solid fa-expand";
+            }
+        }
+        fullscreenBtn.addEventListener("click", toggleFullscreen);
+        maximizeBtn.addEventListener("click", toggleFullscreen);
+
+        // Auto-load saved backend URL on page open
+        const savedUrl = localStorage.getItem(STORAGE_KEY);
+        if (savedUrl) {
+            input.value = savedUrl;
+            loadBackend(savedUrl);
+        }
+    </script>
 </body>
 </html>
