@@ -13,6 +13,10 @@
     {
       "src": "scrum-master.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "agy.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -103,6 +107,14 @@
     {
       "src": "/scrum-master/",
       "dest": "/scrum-master.html"
+    },
+    {
+      "src": "/agy",
+      "dest": "/agy.html"
+    },
+    {
+      "src": "/agy/",
+      "dest": "/agy.html"
     },
     {
       "src": "/scrum-scenarios",
