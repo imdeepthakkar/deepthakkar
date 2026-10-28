@@ -322,6 +322,10 @@
                 <button class="connect-btn" id="connectBtn">Connect</button>
             </div>
             <div class="btn-group">
+                <a id="openTabBtn" href="https://agy-terminal.onrender.com" target="_blank" class="action-btn" title="Open terminal directly in dedicated tab">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    <span>Open Tab</span>
+                </a>
                 <a href="https://drive.google.com/drive/folders/1rVMIUmEclDSFeitXv03QNUbwZMEoY_Q4" target="_blank" class="action-btn">
                     <i class="fa-solid fa-folder"></i>
                     <span>Drive</span>
@@ -369,7 +373,7 @@
             </div>
 
             <!-- Active Live Terminal Frame with full clipboard & interaction permissions -->
-            <iframe id="terminalFrame" class="terminal-frame hidden" allow="clipboard-read; clipboard-write; clipboard-read *; clipboard-write *; fullscreen" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"></iframe>
+            <iframe id="terminalFrame" class="terminal-frame hidden" allow="clipboard-read; clipboard-write; clipboard-read *; clipboard-write *; fullscreen" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-modals"></iframe>
         </div>
     </div>
 
@@ -399,6 +403,7 @@
             // Save to localStorage
             localStorage.setItem(STORAGE_KEY, url);
             input.value = url;
+            if (openTabBtn) openTabBtn.href = url;
 
             // Load iframe
             terminalFrame.src = url;
@@ -440,6 +445,7 @@
         // Auto-load saved backend URL or default to Render backend
         const DEFAULT_URL = "https://agy-terminal.onrender.com";
         const savedUrl = localStorage.getItem(STORAGE_KEY) || DEFAULT_URL;
+        const openTabBtn = document.getElementById("openTabBtn");
         input.value = savedUrl;
         loadBackend(savedUrl);
     </script>
