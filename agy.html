@@ -437,12 +437,11 @@
         fullscreenBtn.addEventListener("click", toggleFullscreen);
         maximizeBtn.addEventListener("click", toggleFullscreen);
 
-        // Auto-load saved backend URL on page open
-        const savedUrl = localStorage.getItem(STORAGE_KEY);
-        if (savedUrl) {
-            input.value = savedUrl;
-            loadBackend(savedUrl);
-        }
+        // Auto-load saved backend URL or default to Render backend
+        const DEFAULT_URL = "https://agy-terminal.onrender.com";
+        const savedUrl = localStorage.getItem(STORAGE_KEY) || DEFAULT_URL;
+        input.value = savedUrl;
+        loadBackend(savedUrl);
     </script>
 </body>
 </html>
