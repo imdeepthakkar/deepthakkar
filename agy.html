@@ -368,8 +368,8 @@
                 </div>
             </div>
 
-            <!-- Active Live Terminal Frame -->
-            <iframe id="terminalFrame" class="terminal-frame hidden" allow="clipboard-read; clipboard-write"></iframe>
+            <!-- Active Live Terminal Frame with full clipboard & interaction permissions -->
+            <iframe id="terminalFrame" class="terminal-frame hidden" allow="clipboard-read; clipboard-write; clipboard-read *; clipboard-write *; fullscreen" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"></iframe>
         </div>
     </div>
 
