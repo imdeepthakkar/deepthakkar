@@ -85,14 +85,6 @@
       "dest": "api/proxy.js"
     },
     {
-      "src": "/cph-live-tracker",
-      "dest": "api/proxy.js"
-    },
-    {
-      "src": "/cph-live-tracker/(.*)",
-      "dest": "api/proxy.js"
-    },
-    {
       "src": "/java",
       "dest": "api/proxy.js"
     },
